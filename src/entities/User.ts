@@ -24,3 +24,5 @@ class User implements IUser {
 }
 
 export default User;
+
+//have to create database -> Tomas
