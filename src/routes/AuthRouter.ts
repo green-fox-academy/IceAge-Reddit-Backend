@@ -8,9 +8,19 @@ const { OK } = StatusCodes;
  *                      User sign in - "Post /api/v1/auth/sign-in"            *
  ******************************************************************************/
 
+// TODO Implement logic and create template(class) for errors
 router.post('/sign-in', async (req: Request, res: Response) => {
-    // TODO implement user registration
-		return res.status(OK).json({"test": "hello"});
+		if (Object.keys(req.body).length !== 0) {
+			const { username, email, password } = req.body;
+
+			if (!username || !email || !password) {
+				return res.status(400).json({ "error": "missing parameter" });
+			}
+
+			return res.status(OK).json({ "token": "yet to be implemented" });
+		}
+		
+		return res.status(400).json({ "error": "empty request" });
 });
 
 export default router;
