@@ -6,4 +6,5 @@ version: 2.1
 workflows:
   app-tests:
     jobs:
+      - run: echo "nothing to test yet"
       # - node/test  *****nothing to test yet*****
