@@ -5,8 +5,8 @@
     "build": "ts-node build.ts && tsc --build tsconfig.prod.json",
     "lint": "eslint . --ext .ts",
     "start": "node -r module-alias/register ./dist --env=production",
-    "start:dev": "nodemon",
-    "test": "nodemon --config ./spec/nodemon.json"
+		"start:dev": "nodemon",
+		"test": "nodemon --config ./spec/nodemon.json"
   },
   "nodemonConfig": {
     "watch": [

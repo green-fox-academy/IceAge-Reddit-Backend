@@ -3,8 +3,8 @@ orbs:
 
 version: 2.1
 
-#*****NOTHING TO TEST YET*****
-# workflows:
-#   app-tests:
-#     jobs:
-#       - node/test
+workflows:
+  app-tests:
+    jobs:
+      - checkout
+      # - node/test
