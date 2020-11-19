@@ -3,7 +3,14 @@ orbs:
 
 version: 2.1
 
+jobs:
+  placeholder:
+    machine: true
+    steps:
+      - checkout
+
 workflows:
   app-tests:
     jobs:
-      - node/test
+      - placeholder
+      # - node/test
