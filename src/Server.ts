@@ -6,6 +6,7 @@ import helmet from 'helmet';
 import express, { NextFunction, Request, Response } from 'express';
 import StatusCodes from 'http-status-codes';
 import 'express-async-errors';
+import cors from 'cors';
 
 import BaseRouter from './routes';
 import logger from '@shared/Logger';
@@ -22,6 +23,7 @@ const { BAD_REQUEST } = StatusCodes;
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
+app.use(cors());
 
 // Show routes called in console during development
 if (process.env.NODE_ENV === 'development') {
@@ -34,7 +36,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // Add APIs
-app.use('/api', BaseRouter);
+app.use('/api/v1', BaseRouter);
 
 // Print API errors
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
