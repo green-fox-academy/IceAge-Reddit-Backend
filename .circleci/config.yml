@@ -5,6 +5,7 @@ version: 2.1
 
 jobs:
   placeholder:
+    machine: true
     steps:
       - checkout
 
