@@ -1,6 +1,6 @@
 import { IncomingHttpHeaders } from 'http';
 
-export class HttpErrorRespose {
+export class HttpErrorResposeDTO {
 
 	constructor(
 		private error: string,
@@ -15,17 +15,8 @@ export class HttpErrorRespose {
 		this.headers = {};
 		this.name = "HttpErrorResponse";
 	}
-	
-	public setUp(error: string, headers: IncomingHttpHeaders): void {
-		this.setError(error);
-		this.setHeaders(headers);
-	}
 
-	private setError(error: string): void {
-		this.error = error;
-	}
-
-	private setHeaders(headers:  IncomingHttpHeaders) {
+	public setHeaders(headers:  IncomingHttpHeaders) {
 		this.headers = headers;
 	}
 }
