@@ -36,8 +36,18 @@ export class UserController {
 			return res.status(401).json(this.errorRespose);
 		}
 
+		if (!this.userService.isValidUsernameFormat(username)) {
+			this.errorRespose.setUp("Whitespaces in username!", req.headers)
+			return res.status(401).json(this.errorRespose);
+		}
+
 		if (!this.userService.isValidEmailFormat(email)) {
-			this.errorRespose.setUp("Invalid email", req.headers)
+			this.errorRespose.setUp("Invalid email format!", req.headers)
+			return res.status(401).json(this.errorRespose);
+		}
+
+		if (!this.userService.isStrongPassword(password)) {
+			this.errorRespose.setUp("Week password!", req.headers)
 			return res.status(401).json(this.errorRespose);
 		}
 
