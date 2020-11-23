@@ -1,7 +1,7 @@
 import { Response } from 'express';
 import { IncomingHttpHeaders } from 'http';
 
-import { UserDTO } from 'src/dto/UserDTO';
+import { UserDTO } from 'src/dtos/UserDTO';
 import { UserValidationService } from './UserValidationService';
 import { Injectable } from 'injection-js';
 
@@ -10,12 +10,12 @@ export class UserService {
 
 	constructor(private userValidationService: UserValidationService) {}
 	
-	public async tryToSign(
+	public tryToSign(
 		userToValidate: any, 
 		headers: IncomingHttpHeaders, 
 		res: Response
-	): Promise<Response> {
-		const validatedUser = await this.userValidationService
+	): Response {
+		const validatedUser = this.userValidationService
 		.validateUser(userToValidate, headers);
 
 		if ( validatedUser instanceof UserDTO) {

@@ -1,16 +1,16 @@
 import bcrypt from 'bcrypt';
 import { IncomingHttpHeaders } from 'http';
 
-import { UserDTO } from 'src/dto/UserDTO';
-import { HttpErrorResposeDTO } from 'src/dto/HttpErrorResponseDTO';
+import { UserDTO } from 'src/dtos/UserDTO';
+import { HttpErrorResposeDTO } from 'src/dtos/HttpErrorResponseDTO';
 
 
 export class UserValidationService {
 
-	public async validateUser(
+	public validateUser(
 		userToValidate: any, 
 		headers: IncomingHttpHeaders,
-	): Promise<any> {
+	): any {
 
 		const username: string = userToValidate.username;
 		const email: string= userToValidate.email;
@@ -36,7 +36,7 @@ export class UserValidationService {
 			return this.createErrorResponse("Week password!", headers);
 		}
 
-		return new UserDTO(username, email, await this.encryptPassword(password));
+		return new UserDTO(username, email, this.encryptPassword(password));
 	}
 
 	private containWhitespaces(string: string): boolean {
@@ -53,8 +53,8 @@ export class UserValidationService {
 		return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/.test(password); 
 	}
 
-	private async encryptPassword(password: string): Promise<string> {
-		const hashPassword: string = await bcrypt.hash(password, 10);
+	private encryptPassword(password: string): string {
+		const hashPassword: string = bcrypt.hashSync(password, 10);
 		return hashPassword;
 	}
 
