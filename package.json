@@ -5,8 +5,8 @@
     "build": "ts-node build.ts && tsc --build tsconfig.prod.json",
     "lint": "eslint . --ext .ts",
     "start": "node -r module-alias/register ./dist --env=production",
-		"start:dev": "nodemon",
-		"test": "nodemon --config ./spec/nodemon.json"
+    "start:dev": "nodemon",
+    "test": "nodemon --config ./spec/nodemon.json"
   },
   "nodemonConfig": {
     "watch": [
@@ -60,6 +60,7 @@
   ],
   "dependencies": {
     "@types/cors": "^2.8.8",
+    "bcrypt": "^5.0.0",
     "command-line-args": "^5.1.1",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
@@ -68,12 +69,15 @@
     "express-async-errors": "^3.1.1",
     "helmet": "^4.2.0",
     "http-status-codes": "^2.1.4",
+    "injection-js": "^2.4.0",
     "jet-logger": "^1.0.4",
     "jsonfile": "^6.1.0",
     "module-alias": "^2.2.2",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
+    "@types/bcrypt": "^3.0.0",
     "@types/command-line-args": "^5.0.0",
     "@types/cookie-parser": "^1.4.2",
     "@types/express": "^4.17.9",

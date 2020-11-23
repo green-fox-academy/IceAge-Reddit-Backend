@@ -1,9 +1,10 @@
+import 'reflect-metadata';
 import { Router } from 'express';
 
-// Init router and path
+import AuthRouter from './auth.route';
+
 const router = Router();
 
-// Add sub-routes
+router.use('/auth', AuthRouter);
 
-// Export the base-router
 export default router;
