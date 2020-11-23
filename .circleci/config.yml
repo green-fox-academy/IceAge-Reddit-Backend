@@ -13,4 +13,4 @@ workflows:
   app-tests:
     jobs:
       - placeholder
-      # - node/test
+      - node/test

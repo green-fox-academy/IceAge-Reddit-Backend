@@ -5,8 +5,8 @@
     "build": "ts-node build.ts && tsc --build tsconfig.prod.json",
     "lint": "eslint . --ext .ts",
     "start": "node -r module-alias/register ./dist --env=production",
-		"start:dev": "nodemon",
-		"test": "nodemon --config ./spec/nodemon.json"
+    "start:dev": "nodemon",
+    "test": "ts-node -r tsconfig-paths/register ./spec"
   },
   "nodemonConfig": {
     "watch": [
@@ -71,7 +71,8 @@
     "jet-logger": "^1.0.4",
     "jsonfile": "^6.1.0",
     "module-alias": "^2.2.2",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "typeorm": "^0.2.29"
   },
   "devDependencies": {
     "@types/command-line-args": "^5.0.0",
