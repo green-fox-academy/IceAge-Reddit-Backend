@@ -9,8 +9,10 @@ import { UserRepository } from 'src/repositories/UserRepository';
 @Injectable()
 export class UserService {
 
-	constructor(private userValidationService: UserValidationService, 
-		private userRepository: UserRepository) {}
+	constructor(
+		private userValidationService: UserValidationService, 
+		private userRepository: UserRepository
+	) {}
 	
 	public tryToSign(
 		userToValidate: any, 
