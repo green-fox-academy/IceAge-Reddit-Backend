@@ -4,11 +4,13 @@ import { IncomingHttpHeaders } from 'http';
 import { UserDTO } from 'src/dtos/UserDTO';
 import { UserValidationService } from './UserValidationService';
 import { Injectable } from 'injection-js';
+import { UserRepository } from 'src/repositories/UserRepository';
 
 @Injectable()
 export class UserService {
 
-	constructor(private userValidationService: UserValidationService) {}
+	constructor(private userValidationService: UserValidationService, 
+		private userRepository: UserRepository) {}
 	
 	public tryToSign(
 		userToValidate: any, 
