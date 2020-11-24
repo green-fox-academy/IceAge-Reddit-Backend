@@ -1,23 +1,26 @@
-import {EntityRepository, Repository} from "typeorm";
-import {User} from "src/models/user";
+import { EntityManager } from "typeorm";
+import { Injectable } from "injection-js";
+import { User } from "src/models/user";
 
-@EntityRepository(User)
-export class UserRepository extends Repository<User> {
+@Injectable()
+export class UserRepository {
+
+	constructor(private manager: EntityManager) { 
+	}
        
-    findByUserName(username: string) {
-      return this.createQueryBuilder("user")
-          .where("user.username = :username", { username })
-          .getOne();
-    }
+	findByUserName(username: string) {
+		return this.manager.getRepository(User).createQueryBuilder("user")
+			.where("user.username = :username", { username })
+			.getOne();
+	}
 
-    findById (id: number) {
-    return this.createQueryBuilder("user")
-    .where("user.id = :id", { id })
-    .getOne();
-    }
+	findById (id: number) {
+		return this.manager.getRepository(User).createQueryBuilder("user")
+			.where("user.id = :id", { id })
+			.getOne();
+	}
 
-    saveUser (user: User) {
-      this.save(user);
-    }
-
+	saveUser(user: User): void {
+		this.manager.save(user);
+	}
 }

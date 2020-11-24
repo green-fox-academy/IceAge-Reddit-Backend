@@ -5,6 +5,7 @@ import { UserDTO } from 'src/dtos/UserDTO';
 import { UserValidationService } from './UserValidationService';
 import { Injectable } from 'injection-js';
 import { UserRepository } from 'src/repositories/UserRepository';
+import { User } from 'src/models/user';
 
 @Injectable()
 export class UserService {
@@ -30,8 +31,12 @@ export class UserService {
 		return res.status(401).json(validatedUser);
 	}
 
-	private saveUser(userDao: UserDTO): void {
-		// TODO save to database
+	private saveUser(userDTO: UserDTO): void {
+		const userToSave: User = new User();
+		userToSave.username = userDTO.getUsername();
+		userToSave.email = userDTO.getEmail();
+		userToSave.password = userDTO.getPassword();
+		this.userRepository.saveUser(userToSave);
 	}
 
 	private isAlreadyUser(user: UserDTO): boolean {
