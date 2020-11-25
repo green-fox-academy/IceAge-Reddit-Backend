@@ -9,7 +9,7 @@
     "start": "nodemon --watch \"src/**/*.ts\" --ignore \"node_modules/**/*\" --exec ts-node src/index.ts",
     "start:dev": "nodemon",
     "start:prod": "cross-env NODE_ENV=production node dist/index.js",
-    "test": "yarn test:lint && yarn test:coverage",
+    "test": "nodemon --config ./spec/nodemon.json",
     "test:unit": "cross-env NODE_ENV=test mocha",
     "test:coverage": "cross-env NODE_ENV=test nyc mocha",
     "typeorm": "tsed typeorm"

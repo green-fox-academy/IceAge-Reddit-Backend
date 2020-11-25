@@ -7,7 +7,15 @@ export class UserService {
 
 	constructor(private userRepository: UserRepository) {}
 
-  async create(user: UserCreation): Promise<void> {
-    await this.userRepository.save(user);
-  }
+  public create(user: UserCreation): void {
+		if(this.isAvailabelUsername(user.username)) {
+			this.userRepository.save(user);
+		} else {
+			throw new Error("Username already taken!");
+		}
+	}
+	
+	private isAvailabelUsername(username: string): boolean {
+		return this.userRepository.findByUsername(username) === undefined;
+	}
 }
