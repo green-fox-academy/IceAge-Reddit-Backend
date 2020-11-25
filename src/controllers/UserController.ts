@@ -1,14 +1,14 @@
-import {Controller, Post} from "@tsed/common";
+import { BodyParams, Controller, Post } from "@tsed/common";
+import { UserCreation } from '../models/UserCreation';
+import { UserService } from '../services/UserService';
 
 @Controller("/auth")
 export class HelloWorldController {
 
-	constructor(){
-		
-	}
+	constructor(private userService: UserService){}
 
   @Post("/sign-in")
-  get() {
-    return "hello";
+  create(@BodyParams() user: UserCreation) {
+    return this.userService.create(user);
   }
 }

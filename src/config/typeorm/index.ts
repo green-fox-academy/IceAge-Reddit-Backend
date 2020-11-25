@@ -10,18 +10,18 @@ export default [
 		"synchronize": true,
 		"logging": false,
 		"entities": [
-			"${rootDir}/entity/**/*.ts"
+			"${rootDir}/entitys/**/*.ts"
 		],
 		"migrations": [
-			"${rootDir}/migration/**/*.ts"
+			"${rootDir}/migrations/**/*.ts"
 		],
 		"subscribers": [
-			"${rootDir}/subscriber/**/*.ts"
+			"${rootDir}/subscribers/**/*.ts"
 		],
 		"cli": {
-			"entitiesDir": "${rootDir}/entity",
-			"migrationsDir": "${rootDir}/migration",
-			"subscribersDir": "${rootDir}/subscriber"
+			"entitiesDir": "${rootDir}/entitys",
+			"migrationsDir": "${rootDir}/migrations",
+			"subscribersDir": "${rootDir}/subscribers"
 		}
 	} as any
 ];
