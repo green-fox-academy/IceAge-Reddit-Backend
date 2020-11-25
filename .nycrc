@@ -3,8 +3,8 @@
     "src/**/*.ts"
   ],
   "exclude": [
-    "node_modules",
     "**/*.d.ts",
+    "node_modules",
     "**/index.ts",
     "**/interfaces/**",
     "**/*.spec.ts"

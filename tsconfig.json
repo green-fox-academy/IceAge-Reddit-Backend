@@ -29,13 +29,15 @@
     ]
   },
   "include": [
-    "./src/**/*.ts"
+	"./src/**/*.ts",
+	"./scripts/**/*.js",
+	"./tests/**/*.ts"
   ],
   "exclude": [
     "node_modules",
     "./public",
     "dist",
-    "test"
+	"test"
   ],
   "linterOptions": {
     "exclude": []

@@ -9,9 +9,9 @@
     "start": "nodemon --watch \"src/**/*.ts\" --ignore \"node_modules/**/*\" --exec ts-node src/index.ts",
     "start:dev": "nodemon",
     "start:prod": "cross-env NODE_ENV=production node dist/index.js",
-    "test": "nodemon --config ./spec/nodemon.json",
+    "test": "cd",
     "test:unit": "cross-env NODE_ENV=test mocha",
-    "test:coverage": "cross-env NODE_ENV=test nyc mocha",
+  	"test:coverage": "cross-env NODE_ENV=test nyc mocha",
     "typeorm": "tsed typeorm"
   },
   "eslintConfig": {
@@ -45,7 +45,7 @@
     }
   },
   "eslintIgnore": [
-    "src/public/",
+    "scripts/mocha/register.js",
     "build.ts"
   ],
   "dependencies": {

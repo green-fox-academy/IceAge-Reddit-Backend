@@ -6,6 +6,7 @@ module.exports = {
   recursive: true,
   reporter: "dot",
   spec: [
-    "src/**/*.spec.ts"
+		"src/**/*.spec.ts",
+		"tests/**/*.spec.ts"
   ]
 };
