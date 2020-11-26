@@ -9,12 +9,12 @@ export class UserService {
 	constructor(private userRepository: UserRepository) {}
 
   public async create(user: UserCreation): Promise<void> {
-		if (await this.isAvailabelUsername(user.username)) {
+		if (await this.isAvailableUsername(user.username)) {
 			this.userRepository.save(user);
 		} 
 	}
 	
-	private async isAvailabelUsername(username: string): Promise<boolean> {
+	private async isAvailableUsername(username: string): Promise<boolean> {
 		if (await this.userRepository.findByUsername(username) == undefined) {
 			return true;
 		} else {

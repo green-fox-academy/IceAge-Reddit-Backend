@@ -10,7 +10,7 @@ export default [
 		"synchronize": true,
 		"logging": false,
 		"entities": [
-			"${rootDir}/entitys/**/*.ts"
+			"${rootDir}/entities/**/*.ts"
 		],
 		"migrations": [
 			"${rootDir}/migrations/**/*.ts"
@@ -19,7 +19,7 @@ export default [
 			"${rootDir}/subscribers/**/*.ts"
 		],
 		"cli": {
-			"entitiesDir": "${rootDir}/entitys",
+			"entitiesDir": "${rootDir}/entities",
 			"migrationsDir": "${rootDir}/migrations",
 			"subscribersDir": "${rootDir}/subscribers"
 		}
