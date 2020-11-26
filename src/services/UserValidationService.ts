@@ -56,25 +56,5 @@ export class UserValidationService {
 	private encryptPassword(password: string): string {
 		const hashPassword: string = bcrypt.hashSync(password, 10);
 		return hashPassword;
-	}
-
-	private createErrorResponse(
-		message: string, 
-		headers: IncomingHttpHeaders
-	): HttpErrorResposeDTO {
-		const HTTP_ADDRES = "https://ice-age-reddit-backend.herokuapp.com/api/v1/auth/"
-		const errorRespose: HttpErrorResposeDTO = new HttpErrorResposeDTO(
-			message,
-			{},
-			`Http failure response for ${HTTP_ADDRES}sign-in: 401 Unauthorized`,
-			"HttpErrorResponse",
-			false,
-			401,
-			"Unauthorized",
-			`${HTTP_ADDRES}sign-in`
-		);
-		
-		errorRespose.setHeaders(headers);
-		return errorRespose;
-	}
+	}	
 }
