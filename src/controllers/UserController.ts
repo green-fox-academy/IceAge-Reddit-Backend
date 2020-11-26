@@ -1,15 +1,14 @@
-import { Request, Response } from 'express';
-import { Injectable } from 'injection-js';
+import { BodyParams, Controller, Post } from '@tsed/common';
+import { UserCreation } from '../models/UserCreation';
+import { UserService } from '../services/UserService';
 
-import { UserService } from 'src/services/UserService';
+@Controller("/auth")
+export class HelloWorldController {
 
-@Injectable()
-export class UserController {
+	constructor(private userService: UserService){}
 
-	constructor(private userService: UserService) {}
-
-	// POST /api/v1/auth/sign-in"
-	public signUser(req: Request, res: Response): Response {
-		return this.userService.tryToSign(req.body, req.headers, res);
-	}
+  @Post("/sign-in")
+  create(@BodyParams() user: UserCreation) {
+    return this.userService.create(user);
+  }
 }

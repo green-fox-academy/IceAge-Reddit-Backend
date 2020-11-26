@@ -1,46 +1,24 @@
-import { Response } from 'express';
-import { IncomingHttpHeaders } from 'http';
+import { Service } from '@tsed/common';
+import { Unauthorized } from '@tsed/exceptions';
+import { UserCreation } from '../models/UserCreation';
+import { UserRepository } from '../repositories/UserRepository';
 
-import { UserDTO } from 'src/dtos/UserDTO';
-import { UserValidationService } from './UserValidationService';
-import { Injectable } from 'injection-js';
-import { UserRepository } from 'src/repositories/UserRepository';
-import { User } from 'src/models/user';
-
-@Injectable()
+@Service()
 export class UserService {
 
-	constructor(
-		private userValidationService: UserValidationService, 
-		private userRepository: UserRepository
-	) {}
+	constructor(private userRepository: UserRepository) {}
+
+  public async create(user: UserCreation): Promise<void> {
+		if (await this.isAvailableUsername(user.username)) {
+			this.userRepository.save(user);
+		} 
+	}
 	
-	public tryToSign(
-		userToValidate: any, 
-		headers: IncomingHttpHeaders, 
-		res: Response
-	): Response {
-		const validatedUser = this.userValidationService
-		.validateUser(userToValidate, headers);
-
-		if ( validatedUser instanceof UserDTO) {
-			this.saveUser(validatedUser);
-			return res.status(200).json({ "token": "TODO yet to be implemented" });
+	private async isAvailableUsername(username: string): Promise<boolean> {
+		if (await this.userRepository.findByUsername(username) == undefined) {
+			return true;
+		} else {
+			throw new Unauthorized("Username already taken!");
 		}
-
-		return res.status(401).json(validatedUser);
-	}
-
-	private saveUser(userDTO: UserDTO): void {
-		const userToSave: User = new User();
-		userToSave.username = userDTO.getUsername();
-		userToSave.email = userDTO.getEmail();
-		userToSave.password = userDTO.getPassword();
-		this.userRepository.saveUser(userToSave);
-	}
-
-	private isAlreadyUser(user: UserDTO): boolean {
-		// TODO check with database
-		return false;
 	}
 }
