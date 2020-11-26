@@ -22,7 +22,10 @@ export const rootDir = __dirname;
     "/api/v1": [
       `${rootDir}/controllers/**/*.ts`
     ]
-  },
+	},
+	componentsScan: [
+		`${rootDir}/middlewares/**/*.ts`,
+	],
   typeorm: typeormConfig,
   exclude: [
     "**/*.spec.ts"

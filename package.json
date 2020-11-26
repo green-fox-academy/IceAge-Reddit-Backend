@@ -11,7 +11,7 @@
     "start:prod": "cross-env NODE_ENV=production node dist/index.js",
     "test": "cd",
     "test:unit": "cross-env NODE_ENV=test mocha",
-  	"test:coverage": "cross-env NODE_ENV=test nyc mocha",
+    "test:coverage": "cross-env NODE_ENV=test nyc mocha",
     "typeorm": "tsed typeorm"
   },
   "eslintConfig": {
@@ -97,7 +97,6 @@
     "sinon-chai": "^3.5.0",
     "supertest": "^6.0.1",
     "ts-node": "^9.0.0",
-    "tsconfig-paths": "^3.9.0",
     "typescript": "^4.1.2"
   },
   "readme": "ERROR: No README data found!",

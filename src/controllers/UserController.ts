@@ -1,4 +1,4 @@
-import { BodyParams, Controller, Post } from "@tsed/common";
+import { BodyParams, Controller, Post } from '@tsed/common';
 import { UserCreation } from '../models/UserCreation';
 import { UserService } from '../services/UserService';
 
