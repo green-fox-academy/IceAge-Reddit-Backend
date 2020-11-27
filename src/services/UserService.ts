@@ -1,7 +1,7 @@
 import { Service } from '@tsed/common';
 import { Unauthorized } from '@tsed/exceptions';
-import { User } from '../entities/User';
 
+import { User } from '../entities/User';
 import { UserCreation } from '../models/UserCreation';
 import { UserLogin } from '../models/UserLogin';
 import { UserRepository } from '../repositories/UserRepository';
