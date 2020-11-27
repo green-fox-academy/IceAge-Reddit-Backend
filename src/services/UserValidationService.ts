@@ -3,13 +3,12 @@ import { Unauthorized } from '@tsed/exceptions';
 import * as bcrypt from 'bcrypt';
 
 import { User } from '../entities/User';
+import { UserLogin } from '../models/UserLogin';
 
 @Service()
 export class UserValidationService {
 
-	public async validateUser(
-		userToValidate: User, 
-	): Promise<User> {
+	public async validateUser(userToValidate: User, ): Promise<User> {
 
 		const username: string = userToValidate.username;
 		const email: string= userToValidate.email;
@@ -37,6 +36,10 @@ export class UserValidationService {
 
 		userToValidate.password = await this.encryptPassword(password);
 		return userToValidate;
+	}
+
+	public async validateUserLogin(userLogin: UserLogin): Promise<UserLogin> {
+		
 	}
 
 	private containWhitespaces(string: string): boolean {

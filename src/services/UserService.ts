@@ -1,6 +1,7 @@
 import { Service } from '@tsed/common';
 import { Unauthorized } from '@tsed/exceptions';
 import { User } from '../entities/User';
+import { UserLogin } from '../models/UserLogin';
 import { UserRepository } from '../repositories/UserRepository';
 import { UserValidationService } from './UserValidationService';
 
@@ -17,6 +18,10 @@ export class UserService {
 		&& await this.isAvailableEmail(validatedUser.email)) {
 			this.userRepository.save(validatedUser);
 		} 
+	}
+
+	public async logIn(userLogin: UserLogin): Promise<void> {
+		const validatedUserLogin = await this.userValidationService.validateUserLogin(userLogin);
 	}
 	
 	private async isAvailableUsername(username: string): Promise<boolean> {
