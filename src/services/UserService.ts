@@ -14,7 +14,9 @@ export class UserService {
 		private userValidationService: UserValidationService) {}
 
   public async create(user: UserCreation): Promise<void> {
-		const validatedUser: UserCreation = await this.userValidationService.validateUser(user); 
+		const validatedUser: UserCreation = 
+		await this.userValidationService.validateUserCreation(user); 
+
 		if (await this.isAvailableUsername(validatedUser.username)
 		&& await this.isAvailableEmail(validatedUser.email)) {
 			this.userRepository.save(validatedUser);
@@ -22,7 +24,8 @@ export class UserService {
 	}
 
 	public async logIn(userLogin: UserLogin): Promise<void> {
-		const validatedUserLogin = await this.userValidationService.validateUserLogin(userLogin);
+		const validatedUserLogin = 
+		await this.userValidationService.validateUserLogin(userLogin);
 	}
 	
 	private async isAvailableUsername(username: string): Promise<boolean> {

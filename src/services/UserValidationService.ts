@@ -8,38 +8,63 @@ import { UserLogin } from '../models/UserLogin';
 @Service()
 export class UserValidationService {
 
-	public async validateUser(userToValidate: UserCreation ): Promise<User> {
-
-		const username: string = userToValidate.username;
-		const email: string= userToValidate.email;
-		const password: string = userToValidate.password;
+	public validateUserLogin(userLogin: UserLogin): UserLogin {
+		const email: string= userLogin.email;
+		const password: string = userLogin.password;
 		
-		if (Object.keys(userToValidate).length === 0) {
+		this.checkRequestBody(userLogin);
+		this.checkEmail(email);
+		this.checkIfStrongPassword(password);
+
+		return userLogin;
+	}
+
+	public async validateUserCreation(userCreation: UserCreation ): Promise<UserCreation> {
+
+		const username: string = userCreation.username;
+		const password: string = userCreation.password;
+		
+		this.checkUserName(username);
+		this.validateUserLogin(userCreation);
+
+		userCreation.password = await this.encryptPassword(password);
+		return userCreation;
+	}
+
+	private checkRequestBody(requestBody: any): void {
+		const objectKeys: string[] = Object.keys(requestBody);
+
+		if (objectKeys.length === 0) {
 			throw new Unauthorized("Empty request body!");
 		}
-	
-		if (!username || !email || !password) {
-			throw new Unauthorized("Missing credentials!");
-		}
 
+		objectKeys.forEach(s => {
+			if (!s) {
+				throw new Unauthorized("Missing credentials!");
+			}
+		});
+	}
+
+	private checkUserName(username: string): void {
 		if (!this.containWhitespaces(username)) {
 			throw new Unauthorized("Whitespaces in username!");
 		}
+	}
 
+	private checkEmail(email: string): void {
 		if (!this.isValidEmailFormat(email)) {
 			throw new Unauthorized("Invalid email format!");
 		}
+	}
 
+	private checkPassword(password: string): void {
+		this.checkIfStrongPassword(password);
+	}
+
+	private checkIfStrongPassword(password: string): void {
 		if (!this.isStrongPassword(password)) {
 			throw new Unauthorized("Week password!");
 		}
-
-		userToValidate.password = await this.encryptPassword(password);
-		return userToValidate;
-	}
-
-	public async validateUserLogin(userLogin: UserLogin): Promise<UserLogin> {
-
 	}
 
 	private containWhitespaces(string: string): boolean {
