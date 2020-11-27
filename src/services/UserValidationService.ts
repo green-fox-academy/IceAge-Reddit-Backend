@@ -2,13 +2,13 @@ import { Service } from '@tsed/di';
 import { Unauthorized } from '@tsed/exceptions';
 import * as bcrypt from 'bcrypt';
 
-import { User } from '../entities/User';
+import { UserCreation } from '../models/UserCreation';
 import { UserLogin } from '../models/UserLogin';
 
 @Service()
 export class UserValidationService {
 
-	public async validateUser(userToValidate: User, ): Promise<User> {
+	public async validateUser(userToValidate: UserCreation ): Promise<User> {
 
 		const username: string = userToValidate.username;
 		const email: string= userToValidate.email;
@@ -39,7 +39,7 @@ export class UserValidationService {
 	}
 
 	public async validateUserLogin(userLogin: UserLogin): Promise<UserLogin> {
-		
+
 	}
 
 	private containWhitespaces(string: string): boolean {
