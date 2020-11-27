@@ -13,18 +13,17 @@ export class UserService {
 		private userRepository: UserRepository,
 		private userValidationService: UserValidationService) {}
 
-  public async create(user: UserCreation): Promise<void> {
-		const validatedUser: UserCreation = 
-		await this.userValidationService.validateUserCreation(user); 
+  public async create(userCreation: UserCreation): Promise<void> {
+		const validatedUserCreation: UserCreation = 
+		await this.userValidationService.validateUserCreation(userCreation); 
 
-		if (await this.isAvailableUsername(validatedUser.username)
-		&& await this.isAvailableEmail(validatedUser.email)) {
-			this.userRepository.save(validatedUser);
+		if (await this.isAvailableUsername(validatedUserCreation.username)
+		&& await this.isAvailableEmail(validatedUserCreation.email)) {
+			this.userRepository.save(validatedUserCreation);
 		} 
 	}
 
 	public async logIn(userLogin: UserLogin): Promise<void> {
-		const validatedUserLogin = 
 		await this.userValidationService.validateUserLogin(userLogin);
 	}
 	

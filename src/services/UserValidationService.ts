@@ -8,15 +8,13 @@ import { UserLogin } from '../models/UserLogin';
 @Service()
 export class UserValidationService {
 
-	public validateUserLogin(userLogin: UserLogin): UserLogin {
+	public validateUserLogin(userLogin: UserLogin): void {
 		const email: string= userLogin.email;
 		const password: string = userLogin.password;
 		
 		this.checkRequestBody(userLogin);
 		this.checkEmail(email);
 		this.checkIfStrongPassword(password);
-
-		return userLogin;
 	}
 
 	public async validateUserCreation(userCreation: UserCreation ): Promise<UserCreation> {
