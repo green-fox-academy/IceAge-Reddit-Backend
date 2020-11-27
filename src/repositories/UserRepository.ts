@@ -6,4 +6,8 @@ export class UserRepository extends Repository<User> {
 	public async findByUsername(usernameToFind: string): Promise<User | undefined> {
 		return await this.findOne({ where: { username: usernameToFind } });
 	}
+
+	public async findByEmail(emailToFind: string): Promise<User | undefined> {
+		return await this.findOne({ where: { email: emailToFind } });
+	}
 }
