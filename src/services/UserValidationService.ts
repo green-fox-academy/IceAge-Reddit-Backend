@@ -12,31 +12,37 @@ export class UserValidationService {
 		const email: string= userLogin.email;
 		const password: string = userLogin.password;
 		
-		this.checkRequestBody(userLogin);
+		this.checkParameters([email, password]);
 		this.checkEmail(email);
-		this.checkIfStrongPassword(password);
+		this.checkPassword(password);
 	}
 
-	public async validateUserCreation(userCreation: UserCreation ): Promise<UserCreation> {
+	public validateUserCreation(userCreation: UserCreation ): void {
 
 		const username: string = userCreation.username;
+		const email: string= userCreation.email;
 		const password: string = userCreation.password;
 		
+		this.checkParameters([username, email, password]);
 		this.checkUserName(username);
-		this.validateUserLogin(userCreation);
-
-		userCreation.password = await this.encryptPassword(password);
-		return userCreation;
+		this.checkEmail(email);
+		this.checkPassword(password);
 	}
 
-	private checkRequestBody(requestBody: any): void {
-		const objectKeys: string[] = Object.keys(requestBody);
+	public async encryptPassword(password: string): Promise<string> {
+		const hashPassword: string = await bcrypt.hash(password, 10) ;
+		return hashPassword;
+	}
 
-		if (objectKeys.length === 0) {
-			throw new Unauthorized("Empty request body!");
+	public async checkEncryptedPassword(
+		storedPassword: string, loginPassword: string): Promise<void> {
+		if (!await bcrypt.compare(loginPassword, storedPassword)) {
+			throw new Unauthorized("Wrong password!");
 		}
+	}
 
-		objectKeys.forEach(s => {
+	private checkParameters(parameters: string[]): void {
+		parameters.forEach(s => {
 			if (!s) {
 				throw new Unauthorized("Missing credentials!");
 			}
@@ -56,10 +62,6 @@ export class UserValidationService {
 	}
 
 	private checkPassword(password: string): void {
-		this.checkIfStrongPassword(password);
-	}
-
-	private checkIfStrongPassword(password: string): void {
 		if (!this.isStrongPassword(password)) {
 			throw new Unauthorized("Week password!");
 		}
@@ -78,9 +80,4 @@ export class UserValidationService {
 	private isStrongPassword(password: string) {
 		return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/.test(password); 
 	}
-
-	private async encryptPassword(password: string): Promise<string> {
-		const hashPassword: string = await bcrypt.hash(password, 10) ;
-		return hashPassword;
-	}	
 }
