@@ -1,5 +1,5 @@
 import { Description, Example, Format, Required } from "@tsed/schema";
-import { Column } from "typeorm";
+import { Column, CreateDateColumn } from "typeorm";
 
 export class UserCreation {
   @Description("Username")
@@ -18,4 +18,5 @@ export class UserCreation {
   @Column()
   @Required()
   password: string;
+
 }
