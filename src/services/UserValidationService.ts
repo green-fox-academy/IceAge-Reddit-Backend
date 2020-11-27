@@ -1,42 +1,42 @@
-import bcrypt from 'bcrypt';
-import { IncomingHttpHeaders } from 'http';
+import { Service } from '@tsed/di';
+import { Unauthorized } from '@tsed/exceptions';
+import * as bcrypt from 'bcrypt';
 
-import { UserDTO } from 'src/dtos/UserDTO';
-import { HttpErrorResposeDTO } from 'src/dtos/HttpErrorResponseDTO';
+import { User } from '../entities/User';
 
-
+@Service()
 export class UserValidationService {
 
-	public validateUser(
-		userToValidate: any, 
-		headers: IncomingHttpHeaders,
-	): any {
+	public async validateUser(
+		userToValidate: User, 
+	): Promise<User> {
 
 		const username: string = userToValidate.username;
 		const email: string= userToValidate.email;
 		const password: string = userToValidate.password;
 		
 		if (Object.keys(userToValidate).length === 0) {
-			return this.createErrorResponse("Empty request body!", headers);
+			throw new Unauthorized("Empty request body!");
 		}
 	
 		if (!username || !email || !password) {
-			return this.createErrorResponse("Missing credentials!", headers);
+			throw new Unauthorized("Missing credentials!");
 		}
 
 		if (!this.containWhitespaces(username)) {
-			return this.createErrorResponse("Whitespaces in username!", headers);
+			throw new Unauthorized("Whitespaces in username!");
 		}
 
 		if (!this.isValidEmailFormat(email)) {
-			return this.createErrorResponse("Invalid email format!", headers);
+			throw new Unauthorized("Invalid email format!");
 		}
 
 		if (!this.isStrongPassword(password)) {
-			return this.createErrorResponse("Week password!", headers);
+			throw new Unauthorized("Week password!");
 		}
 
-		return new UserDTO(username, email, this.encryptPassword(password));
+		userToValidate.password = await this.encryptPassword(password);
+		return userToValidate;
 	}
 
 	private containWhitespaces(string: string): boolean {
@@ -53,28 +53,8 @@ export class UserValidationService {
 		return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/.test(password); 
 	}
 
-	private encryptPassword(password: string): string {
-		const hashPassword: string = bcrypt.hashSync(password, 10);
+	private async encryptPassword(password: string): Promise<string> {
+		const hashPassword: string = await bcrypt.hash(password, 10) ;
 		return hashPassword;
-	}
-
-	private createErrorResponse(
-		message: string, 
-		headers: IncomingHttpHeaders
-	): HttpErrorResposeDTO {
-		const HTTP_ADDRES = "https://ice-age-reddit-backend.herokuapp.com/api/v1/auth/"
-		const errorRespose: HttpErrorResposeDTO = new HttpErrorResposeDTO(
-			message,
-			{},
-			`Http failure response for ${HTTP_ADDRES}sign-in: 401 Unauthorized`,
-			"HttpErrorResponse",
-			false,
-			401,
-			"Unauthorized",
-			`${HTTP_ADDRES}sign-in`
-		);
-		
-		errorRespose.setHeaders(headers);
-		return errorRespose;
-	}
+	}	
 }
