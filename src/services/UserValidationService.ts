@@ -1,6 +1,5 @@
 import { Service } from '@tsed/di';
 import { Unauthorized } from '@tsed/exceptions';
-import * as bcrypt from 'bcrypt';
 
 import { UserCreation } from '../models/UserCreation';
 import { UserLogin } from '../models/UserLogin';
@@ -27,18 +26,6 @@ export class UserValidationService {
 		this.checkUserName(username);
 		this.checkEmail(email);
 		this.checkPassword(password);
-	}
-
-	public async encryptPassword(password: string): Promise<string> {
-		const hashPassword: string = await bcrypt.hash(password, 10) ;
-		return hashPassword;
-	}
-
-	public async checkEncryptedPassword(
-		storedPassword: string, loginPassword: string): Promise<void> {
-		if (!await bcrypt.compare(loginPassword, storedPassword)) {
-			throw new Unauthorized("Wrong password!");
-		}
 	}
 
 	private checkParameters(parameters: string[]): void {

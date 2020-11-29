@@ -5,6 +5,7 @@ import { User } from '../entities/User';
 import { UserCreation } from '../models/UserCreation';
 import { UserLogin } from '../models/UserLogin';
 import { UserRepository } from '../repositories/UserRepository';
+import { EncryptService } from './EncryptService';
 import { UserValidationService } from './UserValidationService';
 
 @Service()
@@ -12,7 +13,9 @@ export class UserService {
 
 	constructor(
 		private userRepository: UserRepository,
-		private userValidationService: UserValidationService) {}
+		private userValidationService: UserValidationService,
+		private encryptService: EncryptService
+	) {}
 
   public async create(userCreation: UserCreation): Promise<void> {
 		this.userValidationService.validateUserCreation(userCreation);
@@ -29,7 +32,7 @@ export class UserService {
 
 		const user: User | undefined = await this.userRepository.findByEmail(userLogin.email);
 		if (user) {
-			this.userValidationService.checkEncryptedPassword(user.password, userLogin.password);
+			this.encryptService.checkEncryptedPassword(user.password, userLogin.password);
 		} else {
 			throw new Unauthorized("This email is not registrated!");
 		}
@@ -53,6 +56,6 @@ export class UserService {
 
 	private async encryptUsersPassword(userCreation: UserCreation): Promise<void> {
 		userCreation.password = 
-			await this.userValidationService.encryptPassword(userCreation.password);
+			await this.encryptService.encryptPassword(userCreation.password);
 	}
 }
