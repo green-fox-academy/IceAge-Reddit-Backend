@@ -16,7 +16,7 @@ export class UserValidationService {
 		this.checkPassword(password);
 	}
 
-	public validateUserCreation(userCreation: UserCreation ): void {
+	public validateUserCreation(userCreation: UserCreation): void {
 
 		const username: string = userCreation.username;
 		const email: string= userCreation.email;
