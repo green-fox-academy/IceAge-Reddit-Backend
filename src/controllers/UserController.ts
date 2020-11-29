@@ -5,7 +5,7 @@ import { UserLogin } from '../models/UserLogin';
 import { UserService } from '../services/UserService';
 
 @Controller("/auth")
-export class HelloWorldController {
+export class UserController {
 
 	constructor(private userService: UserService){}
 
