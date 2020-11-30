@@ -4,12 +4,12 @@ import * as bcrypt from 'bcrypt';
 
 @Service()
 export class EncryptService {
-	public async encryptPassword(password: string): Promise<string> {
+	public async getEncryptedPassword(password: string): Promise<string> {
 		const hashPassword: string = await bcrypt.hash(password, 10) ;
 		return hashPassword;
 	}
 
-	public async checkEncryptedPassword(
+	public async compareEncryptedPassword(
 		storedPassword: string, loginPassword: string): Promise<void> {
 		if (!await bcrypt.compare(loginPassword, storedPassword)) {
 			throw new Unauthorized("Wrong password!");

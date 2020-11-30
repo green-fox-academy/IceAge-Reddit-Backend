@@ -1,7 +1,6 @@
 import { BodyParams, Controller, Post } from '@tsed/common';
 
-import { UserCreation } from '../models/UserCreation';
-import { UserLogin } from '../models/UserLogin';
+import { UserCreation, UserLogin } from '../models/auth.types';
 import { UserService } from '../services/UserService';
 
 @Controller("/auth")
