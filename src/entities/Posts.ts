@@ -14,7 +14,7 @@ export class Posts {
   @CreateDateColumn()
   date_created: Date;
 
-  @ManyToOne(type => Subreddits, {cascade: ["insert"]})
+  @ManyToOne(type => Subreddits, subreddit => subreddit.posts,{cascade: ["insert"]})
   @Column()
   subreddit: string;
 
