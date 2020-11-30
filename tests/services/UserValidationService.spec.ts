@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import { Unauthorized } from '@tsed/exceptions';
 import { assert, expect } from "chai";
-import { UserCreation } from '../../src/models/UserCreation';
+import { UserCreation } from '../../src/models/auth.types';
 import { UserValidationService } from '../../src/services/UserValidationService';
 
 describe("UserValidationService", () => {
