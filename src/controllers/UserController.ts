@@ -5,9 +5,9 @@ import { UserService } from '../services/UserService';
 
 @Controller("/auth")
 export class UserController {
-
+	
 	constructor(private userService: UserService){}
-
+	
   @Post("/sign-in")
 	createUser(@BodyParams() user: UserCreation) {
     return this.userService.create(user);
