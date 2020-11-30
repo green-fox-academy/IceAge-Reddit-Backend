@@ -1,8 +1,7 @@
 import { Service } from '@tsed/di';
 import { Unauthorized } from '@tsed/exceptions';
 
-import { UserCreation } from '../models/UserCreation';
-import { UserLogin } from '../models/UserLogin';
+import { UserCreation, UserLogin } from '../models/auth.types';
 
 @Service()
 export class UserValidationService {
@@ -29,15 +28,12 @@ export class UserValidationService {
 	}
 
 	private checkParameters(parameters: string[]): void {
-		parameters.forEach(s => {
-			if (!s) {
-				throw new Unauthorized("Missing credentials!");
-			}
-		});
+		const hasEmpty = parameters.some(x => !x);
+		if (hasEmpty) throw new Unauthorized("Missing credentials");
 	}
 
 	private checkUserName(username: string): void {
-		if (!this.containWhitespaces(username)) {
+		if (!this.hasWhitespaces(username)) {
 			throw new Unauthorized("Whitespaces in username!");
 		}
 	}
@@ -54,7 +50,7 @@ export class UserValidationService {
 		}
 	}
 
-	private containWhitespaces(string: string): boolean {
+	private hasWhitespaces(string: string): boolean {
 		return !/\s/.test(string);
 	}
 

@@ -2,8 +2,7 @@ import { Service } from '@tsed/common';
 import { Unauthorized } from '@tsed/exceptions';
 
 import { User } from '../entities/User';
-import { UserCreation } from '../models/UserCreation';
-import { UserLogin } from '../models/UserLogin';
+import { UserCreation, UserLogin } from '../models/auth.types';
 import { UserRepository } from '../repositories/UserRepository';
 import { EncryptService } from './EncryptService';
 import { UserValidationService } from './UserValidationService';
@@ -32,7 +31,7 @@ export class UserService {
 
 		const user: User | undefined = await this.userRepository.findByEmail(userLogin.email);
 		if (user) {
-			this.encryptService.checkEncryptedPassword(user.password, userLogin.password);
+			this.encryptService.compareEncryptedPassword(user.password, userLogin.password);
 		} else {
 			throw new Unauthorized("This email is not registrated!");
 		}
@@ -56,6 +55,6 @@ export class UserService {
 
 	private async encryptUsersPassword(userCreation: UserCreation): Promise<void> {
 		userCreation.password = 
-			await this.encryptService.encryptPassword(userCreation.password);
+		await this.encryptService.getEncryptedPassword(userCreation.password);
 	}
 }
