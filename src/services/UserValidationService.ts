@@ -29,7 +29,7 @@ export class UserValidationService {
 
 	private checkParameters(parameters: string[]): void {
 		const hasEmpty = parameters.some(x => !x);
-		if (hasEmpty) throw new Unauthorized("Missing credentials");
+		if (hasEmpty) throw new Unauthorized("Missing credentials!");
 	}
 
 	private checkUserName(username: string): void {
