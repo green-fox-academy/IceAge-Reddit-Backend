@@ -60,7 +60,7 @@ export class UserValidationService {
 
 	/* To check a password between 6 to 20 characters which contain 
 	at least one numeric digit, one uppercase and one lowercase letter */
-	private isStrongPassword(password: string) {
+	private isStrongPassword(password: string): boolean {
 		return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/.test(password); 
 	}
 }

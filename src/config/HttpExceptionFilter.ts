@@ -3,7 +3,7 @@ import { Exception } from "@tsed/exceptions";
 
 @Catch(Exception)
 export class HttpExceptionFilter implements ExceptionFilterMethods {
-	catch(exception: Exception, ctx: PlatformContext) {
+	catch(exception: Exception, ctx: PlatformContext): void {
 		const {response, logger} = ctx;
 		const error = this.mapError(exception);
 
