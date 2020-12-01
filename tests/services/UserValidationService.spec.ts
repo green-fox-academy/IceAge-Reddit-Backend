@@ -7,11 +7,14 @@ import { UserValidationService } from '../../src/services/UserValidationService'
 
 describe("UserValidationService", () => {
 	const service = new UserValidationService();
-	const userCreation: UserCreation = new UserCreation();
+	let userCreation: UserCreation;
 	beforeEach(() => {
-		userCreation.username = "Karhal";
-		userCreation.email = "karhal@email.com";
-		userCreation.password = "Str0ngPa55word";
+		userCreation = {
+			username: "Karhal",
+			email: "karhal@email.com",
+			password: "Str0ngPa55word"
+		};
+		
 	});
 	describe("validateUserCreation()", () => {
 		it("should not fail", () => {	
