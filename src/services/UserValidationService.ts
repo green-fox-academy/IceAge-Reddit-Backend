@@ -1,45 +1,56 @@
 import { Service } from '@tsed/di';
 import { Unauthorized } from '@tsed/exceptions';
-import * as bcrypt from 'bcrypt';
 
-import { User } from '../entities/User';
+import { UserCreation, UserLogin } from '../models/auth.types';
 
 @Service()
 export class UserValidationService {
 
-	public async validateUser(
-		userToValidate: User, 
-	): Promise<User> {
-
-		const username: string = userToValidate.username;
-		const email: string= userToValidate.email;
-		const password: string = userToValidate.password;
+	public validateUserLogin(userLogin: UserLogin): void {
+		const email: string= userLogin.email;
+		const password: string = userLogin.password;
 		
-		if (Object.keys(userToValidate).length === 0) {
-			throw new Unauthorized("Empty request body!");
-		}
-	
-		if (!username || !email || !password) {
-			throw new Unauthorized("Missing credentials!");
-		}
+		this.checkParameters([email, password]);
+		this.checkEmail(email);
+		this.checkPassword(password);
+	}
 
-		if (!this.containWhitespaces(username)) {
+	public validateUserCreation(userCreation: UserCreation): void {
+
+		const username: string = userCreation.username;
+		const email: string= userCreation.email;
+		const password: string = userCreation.password;
+		
+		this.checkParameters([username, email, password]);
+		this.checkUserName(username);
+		this.checkEmail(email);
+		this.checkPassword(password);
+	}
+
+	private checkParameters(parameters: string[]): void {
+		const hasEmpty = parameters.some(x => !x);
+		if (hasEmpty) throw new Unauthorized("Missing credentials!");
+	}
+
+	private checkUserName(username: string): void {
+		if (!this.hasWhitespaces(username)) {
 			throw new Unauthorized("Whitespaces in username!");
 		}
+	}
 
+	private checkEmail(email: string): void {
 		if (!this.isValidEmailFormat(email)) {
 			throw new Unauthorized("Invalid email format!");
 		}
+	}
 
+	private checkPassword(password: string): void {
 		if (!this.isStrongPassword(password)) {
 			throw new Unauthorized("Week password!");
 		}
-
-		userToValidate.password = await this.encryptPassword(password);
-		return userToValidate;
 	}
 
-	private containWhitespaces(string: string): boolean {
+	private hasWhitespaces(string: string): boolean {
 		return !/\s/.test(string);
 	}
 
@@ -49,12 +60,7 @@ export class UserValidationService {
 
 	/* To check a password between 6 to 20 characters which contain 
 	at least one numeric digit, one uppercase and one lowercase letter */
-	private isStrongPassword(password: string) {
+	private isStrongPassword(password: string): boolean {
 		return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/.test(password); 
 	}
-
-	private async encryptPassword(password: string): Promise<string> {
-		const hashPassword: string = await bcrypt.hash(password, 10) ;
-		return hashPassword;
-	}	
 }
