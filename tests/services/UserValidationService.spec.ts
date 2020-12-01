@@ -13,8 +13,7 @@ describe("UserValidationService", () => {
 			username: "Karhal",
 			email: "karhal@email.com",
 			password: "Str0ngPa55word"
-		};
-		
+		};	
 	});
 	describe("validateUserCreation()", () => {
 		it("should not fail", () => {	
