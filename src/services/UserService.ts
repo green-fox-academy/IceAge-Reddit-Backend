@@ -26,10 +26,10 @@ export class UserService {
 			await this.encryptUsersPassword(userCreation);
 			this.userRepository.save(userCreation);
 		} 
-		return this.authService.getToken(userCreation.username);
+		return this.authService.getToken(userCreation.email);
 	}
 
-	public async logIn(userLogin: UserLogin): Promise<void> {
+	public async logIn(userLogin: UserLogin): Promise<JWToken> {
 		this.userValidationService.validateUserLogin(userLogin);
 
 		const user: User | undefined = await this.userRepository.findByEmail(userLogin.email);
@@ -38,6 +38,8 @@ export class UserService {
 		} else {
 			throw new Unauthorized("This email is not registered!");
 		}
+
+		return this.authService.getToken(userLogin.email);
 	}
 	
 	private async isAvailableUsername(username: string): Promise<boolean> {
