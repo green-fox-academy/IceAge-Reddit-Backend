@@ -33,7 +33,7 @@ export class UserService {
 		if (user) {
 			this.encryptService.compareEncryptedPassword(user.password, userLogin.password);
 		} else {
-			throw new Unauthorized("This email is not registrated!");
+			throw new Unauthorized("This email is not registered!");
 		}
 	}
 	
