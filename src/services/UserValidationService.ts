@@ -29,7 +29,7 @@ export class UserValidationService {
 
 	private checkParameters(parameters: string[]): void {
 		const hasEmpty = parameters.some(x => !x);
-		if (hasEmpty) throw new Unauthorized("Missing credentials");
+		if (hasEmpty) throw new Unauthorized("Missing credentials!");
 	}
 
 	private checkUserName(username: string): void {
@@ -60,7 +60,7 @@ export class UserValidationService {
 
 	/* To check a password between 6 to 20 characters which contain 
 	at least one numeric digit, one uppercase and one lowercase letter */
-	private isStrongPassword(password: string) {
+	private isStrongPassword(password: string): boolean {
 		return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/.test(password); 
 	}
 }

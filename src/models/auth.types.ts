@@ -1,8 +1,8 @@
-export class UserLogin {
+export interface UserLogin {
 	email: string;
 	password: string;
 }
 
-export class UserCreation extends UserLogin {
+export interface UserCreation extends UserLogin {
 	username: string;
 }
