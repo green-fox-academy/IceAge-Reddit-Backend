@@ -9,6 +9,7 @@ import * as cors from "cors";
 import "@tsed/ajv";
 import "@tsed/typeorm";
 import typeormConfig from "./config/typeorm";
+import './config/HttpExceptionFilter';
 
 
 export const rootDir = __dirname;

@@ -9,45 +9,11 @@
     "start": "nodemon --watch \"src/**/*.ts\" --ignore \"node_modules/**/*\" --exec ts-node src/index.ts",
     "start:dev": "nodemon",
     "start:prod": "cross-env NODE_ENV=production node dist/index.js",
-    "test": "cd",
+    "test": "mocha",
     "test:unit": "cross-env NODE_ENV=test mocha",
     "test:coverage": "cross-env NODE_ENV=test nyc mocha",
     "typeorm": "tsed typeorm"
   },
-  "eslintConfig": {
-    "parser": "@typescript-eslint/parser",
-    "plugins": [
-      "@typescript-eslint"
-    ],
-    "extends": [
-      "eslint:recommended",
-      "plugin:@typescript-eslint/recommended",
-      "plugin:@typescript-eslint/recommended-requiring-type-checking"
-    ],
-    "parserOptions": {
-      "project": "./tsconfig.json"
-    },
-    "rules": {
-      "max-len": [
-        "error",
-        {
-          "code": 100
-        }
-      ],
-      "no-console": 1,
-      "no-extra-boolean-cast": 0,
-      "@typescript-eslint/restrict-plus-operands": 0,
-      "@typescript-eslint/explicit-module-boundary-types": 0,
-      "@typescript-eslint/no-explicit-any": 0,
-      "@typescript-eslint/no-floating-promises": 0,
-      "@typescript-eslint/no-unsafe-member-access": 0,
-      "@typescript-eslint/no-unsafe-assignment": 0
-    }
-  },
-  "eslintIgnore": [
-    "scripts/mocha/register.js",
-    "build.ts"
-  ],
   "dependencies": {
     "@tsed/ajv": "^6.11.2",
     "@tsed/common": "^6.11.2",
