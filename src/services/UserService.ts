@@ -16,7 +16,7 @@ export class UserService {
 		private encryptService: EncryptService
 	) {}
 
-  public async create(userCreation: UserCreation): Promise<void> {
+	public async create(userCreation: UserCreation): Promise<void> {
 		this.userValidationService.validateUserCreation(userCreation);
 		
 		if (await this.isAvailableUsername(userCreation.username)

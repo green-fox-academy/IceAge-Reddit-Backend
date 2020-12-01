@@ -8,12 +8,12 @@ export class UserController {
 	constructor(private userService: UserService) {}
 
 	@Post('/sign-in')
-	createUser(@BodyParams() user: UserCreation): Promise<void> {
-		return this.userService.create(user);
+	public async createUser(@BodyParams() user: UserCreation): Promise<void> {
+		return await this.userService.create(user);
 	}
 
 	@Post('/log-in')
-	logInUser(@BodyParams() user: UserLogin): Promise<void> {
-		return this.userService.logIn(user);
+	public async logInUser(@BodyParams() user: UserLogin): Promise<void> {
+		return await this.userService.logIn(user);
 	}
 }
