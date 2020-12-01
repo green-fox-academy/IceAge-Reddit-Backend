@@ -2,8 +2,9 @@ import { Service } from '@tsed/common';
 import { Unauthorized } from '@tsed/exceptions';
 
 import { User } from '../entities/User';
-import { UserCreation, UserLogin } from '../models/auth.types';
+import { JWToken, UserCreation, UserLogin } from '../models/auth.types';
 import { UserRepository } from '../repositories/UserRepository';
+import { AuthService } from './AuthService';
 import { EncryptService } from './EncryptService';
 import { UserValidationService } from './UserValidationService';
 
@@ -13,10 +14,11 @@ export class UserService {
 	constructor(
 		private userRepository: UserRepository,
 		private userValidationService: UserValidationService,
-		private encryptService: EncryptService
+		private encryptService: EncryptService,
+		private authService: AuthService
 	) {}
 
-	public async create(userCreation: UserCreation): Promise<void> {
+	public async create(userCreation: UserCreation): Promise<JWToken> {
 		this.userValidationService.validateUserCreation(userCreation);
 		
 		if (await this.isAvailableUsername(userCreation.username)
@@ -24,6 +26,7 @@ export class UserService {
 			await this.encryptUsersPassword(userCreation);
 			this.userRepository.save(userCreation);
 		} 
+		return this.authService.getToken(userCreation.username);
 	}
 
 	public async logIn(userLogin: UserLogin): Promise<void> {
