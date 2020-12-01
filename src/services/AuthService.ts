@@ -7,7 +7,7 @@ import { JWToken } from '../models/auth.types';
 export class AuthService {
 	public getToken(username: string): JWToken {
 		const token: JWToken = {
-			token: jwt.sign(username, 'Super Cuper Tajnej Secret')
+			token: jwt.sign(username, process.env.TOKEN_SECRET)
 		}
 		return token;
 	}
