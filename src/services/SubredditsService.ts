@@ -10,11 +10,11 @@ export class SubredditsService {
 		private subredditsRepository: SubredditsRepository,
 	) {}
 
-  public async create(subreddits: Subreddits): Promise<void> {
-			await this.subredditsRepository.save(subreddits);
-    } 
-    
-  public async findAll(): Promise <Subreddits[] | undefined> {
-      return await this.findAll();
-    }
+	public async create(subreddits: Subreddits): Promise<void> {
+		await this.subredditsRepository.save(subreddits);
+	} 
+	
+	public async findAll(): Promise <Subreddits[] | undefined> {
+		return await this.findAll();
+	}
 }

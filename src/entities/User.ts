@@ -2,19 +2,19 @@ import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeor
 
 @Entity()
 export class User {
-  
-  @PrimaryGeneratedColumn()
-  id: number;
+	
+	@PrimaryGeneratedColumn()
+	id: number;
 
-  @Column()
-  username: string;
+	@Column()
+	username: string;
 
-  @Column()
-  email: string;
+	@Column()
+	email: string;
 
-  @Column()
-  password: string;
+	@Column()
+	password: string;
 
-  @CreateDateColumn()
-  date_created: Date;
+	@CreateDateColumn()
+	date_created: Date;
 }
