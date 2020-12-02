@@ -1,8 +1,8 @@
 import { Controller, Post, UseBefore } from '@tsed/common';
-import { VerifyTokenMiddleware } from '../middlewares/VerifyTokenMiddleware';
+import { AuthMiddleware } from '../middlewares/AuthMiddleware';
 
 @Controller('/token')
-@UseBefore(VerifyTokenMiddleware)
+@UseBefore(AuthMiddleware)
 export class AuthTestController {
 
 	@Post('/test')

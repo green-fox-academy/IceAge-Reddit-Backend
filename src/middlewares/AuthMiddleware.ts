@@ -3,7 +3,7 @@ import { Unauthorized } from '@tsed/exceptions';
 import { AuthService } from '../services/AuthService';
 
 @Middleware()
-export class VerifyTokenMiddleware implements IMiddleware{
+export class AuthMiddleware implements IMiddleware{
 
 	constructor(
 		private authService: AuthService
