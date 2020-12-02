@@ -11,4 +11,8 @@ export class AuthService {
 		}
 		return token;
 	}
+
+	public verifyToken(token: string): void {
+		jwt.verify(token, process.env.TOKEN_SECRET as string)
+	}
 }
