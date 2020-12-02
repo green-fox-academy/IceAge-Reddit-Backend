@@ -5,9 +5,9 @@ import { JWToken } from '../models/auth.types';
 
 @Service()
 export class AuthService {
-	public getToken(username: string): JWToken {
+	public getToken(email: string): JWToken {
 		const token: JWToken = {
-			token: jwt.sign(username, process.env.TOKEN_SECRET as string)
+			token: jwt.sign(email, process.env.TOKEN_SECRET as string)
 		}
 		return token;
 	}
