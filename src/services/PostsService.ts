@@ -14,7 +14,7 @@ export class PostsService {
 		await this.postsRepository.save(posts);
 	} 
 		
-	public async findAll(): Promise <Posts[] | undefined> {
-		return await this.findAll();
+	public async findAll(): Promise <Posts[]> {
+		return await this.postsRepository.find();
 	}
 }
