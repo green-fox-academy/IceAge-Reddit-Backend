@@ -1,65 +1,53 @@
-import cookieParser from 'cookie-parser';
-import morgan from 'morgan';
-import path from 'path';
-import helmet from 'helmet';
-
-import express, { NextFunction, Request, Response } from 'express';
-import StatusCodes from 'http-status-codes';
-import 'express-async-errors';
-import cors from 'cors';
-
-import BaseRouter from './routes';
-import logger from '@shared/Logger';
-
-const app = express();
-const { BAD_REQUEST } = StatusCodes;
+import { Configuration, Inject } from "@tsed/di";
+import { PlatformApplication } from "@tsed/common";
+import "@tsed/platform-express"; // /!\ keep this import
+import * as bodyParser from "body-parser";
+import * as compress from "compression";
+import * as cookieParser from "cookie-parser";
+import * as methodOverride from "method-override";
+import * as cors from "cors";
+import "@tsed/ajv";
+import "@tsed/typeorm";
+import typeormConfig from "./config/typeorm";
+import './config/HttpExceptionFilter';
 
 
+export const rootDir = __dirname;
 
-/************************************************************************************
- *                              Set basic express settings
- ***********************************************************************************/
+@Configuration({
+  rootDir,
+  acceptMimes: ["application/json"],
+  httpPort: process.env.PORT || 3000,
+  httpsPort: false, // CHANGE
+  mount: {
+    "/api/v1": [
+      `${rootDir}/controllers/**/*.ts`
+    ]
+	},
+	componentsScan: [
+		`${rootDir}/middlewares/**/*.ts`,
+	],
+  typeorm: typeormConfig,
+  exclude: [
+    "**/*.spec.ts"
+  ]
+})
+export class Server {
+  @Inject()
+  app: PlatformApplication;
 
-app.use(express.json());
-app.use(express.urlencoded({extended: true}));
-app.use(cookieParser());
-app.use(cors());
+  @Configuration()
+  settings: Configuration;
 
-// Show routes called in console during development
-if (process.env.NODE_ENV === 'development') {
-    app.use(morgan('dev'));
+  $beforeRoutesInit(): void {
+    this.app
+      .use(cors())
+      .use(cookieParser())
+      .use(compress({}))
+      .use(methodOverride())
+      .use(bodyParser.json())
+      .use(bodyParser.urlencoded({
+        extended: true
+      }));
+  }
 }
-
-// Security
-if (process.env.NODE_ENV === 'production') {
-    app.use(helmet());
-}
-
-// Add APIs
-app.use('/api/v1', BaseRouter);
-
-// Print API errors
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-    logger.err(err, true);
-    return res.status(BAD_REQUEST).json({
-        error: err.message,
-    });
-});
-
-
-
-/************************************************************************************
- *                              Serve front-end content
- ***********************************************************************************/
-
-const viewsDir = path.join(__dirname, 'views');
-app.set('views', viewsDir);
-const staticDir = path.join(__dirname, 'public');
-app.use(express.static(staticDir));
-app.get('*', (req: Request, res: Response) => {
-    res.sendFile('index.html', {root: viewsDir});
-});
-
-// Export express instance
-export default app;
