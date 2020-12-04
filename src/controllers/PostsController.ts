@@ -4,18 +4,12 @@ import { Posts } from '../entities/Posts';
 import { PostsService } from '../services/PostsService';
 
 
-@Controller('/feed')
+@Controller('/')
 export class UserController {
 	constructor(private postsService: PostsService) {}
 
-	@Get('/')
+	@Get('/feed')
 	getPostsFeed(): Promise<Posts[]> {
 		return this.postsService.findAll();
 	}
-
-	/*
-	@Post('/subreddits/posts/create')
-	createPost(@BodyParams() posts: Posts): Promise<void> {
-		return this.postsService.create(posts);
-	}*/
 }
