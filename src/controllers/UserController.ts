@@ -1,19 +1,22 @@
 import { BodyParams, Controller, Post } from '@tsed/common';
+import { ContentType, Returns } from '@tsed/schema';
 
-import { UserCreation, UserLogin } from '../models/auth.types';
+import { JWToken, UserCreation, UserLogin } from '../models/auth.types';
 import { UserService } from '../services/UserService';
 
 @Controller('/auth')
+@ContentType("application/json")
+@Returns(200, Object)
 export class UserController {
 	constructor(private userService: UserService) {}
 
 	@Post('/sign-in')
-	createUser(@BodyParams() user: UserCreation): Promise<void> {
-		return this.userService.create(user);
+	public async createUser(@BodyParams() user: UserCreation): Promise<JWToken> {
+		return await this.userService.create(user);
 	}
 
 	@Post('/log-in')
-	logInUser(@BodyParams() user: UserLogin): Promise<void> {
-		return this.userService.logIn(user);
+	public async logInUser(@BodyParams() user: UserLogin): Promise<JWToken> {
+		return await this.userService.logIn(user);
 	}
 }
