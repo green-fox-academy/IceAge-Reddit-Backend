@@ -1,11 +1,7 @@
 import { Service } from '@tsed/common';
 import * as jwt from 'jsonwebtoken';
 
-import { JWToken } from '../models/auth.types';
-
-interface Email {
-	email: string;
-}
+import { Email, JWToken } from '../models/auth.types';
 
 @Service()
 export class AuthService {
