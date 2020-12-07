@@ -14,8 +14,8 @@ export class AuthMiddleware implements IMiddleware{
 		if (!token) throw new Unauthorized('Access Denied!');
 
 		try {
-			const renewToken = this.authService.verifyAndProlongToken(token.split(' ')[1]);
-			response.header('Prolonged-Token', renewToken); 
+			const prolongedToken = this.authService.verifyAndProlongToken(token.split(' ')[1]);
+			response.header('Prolonged-Token', prolongedToken); 
 		} catch (err) {
 			if (err.message == 'jwt expired') {
 				throw new Unauthorized('Token expired!');
