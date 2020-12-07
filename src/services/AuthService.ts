@@ -7,7 +7,7 @@ import { JWToken } from '../models/auth.types';
 export class AuthService {
 	public getToken(email: string): JWToken {
 		const token: JWToken = {
-			token: jwt.sign(email, process.env.TOKEN_SECRET as string)
+			token: jwt.sign(email, process.env.TOKEN_SECRET as string, { expiresIn: '24h' })
 		}
 		return token;
 	}
