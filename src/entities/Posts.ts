@@ -15,6 +15,7 @@ export class Posts {
 	date_created: Date;
 
 	@ManyToOne(type => Subreddits, subreddit => subreddit.posts)
+	@Column()
 	subreddit: string;
 
 	@Column()
