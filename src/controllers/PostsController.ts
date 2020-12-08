@@ -5,7 +5,7 @@ import { PostsService } from '../services/PostsService';
 
 
 @Controller('/')
-export class UserController {
+export class PostsController {
 	constructor(private postsService: PostsService) {}
 
 	@Get('/feed')
