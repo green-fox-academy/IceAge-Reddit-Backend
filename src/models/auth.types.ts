@@ -6,3 +6,11 @@ export interface UserLogin {
 export interface UserCreation extends UserLogin {
 	username: string;
 }
+
+export interface JWToken {
+	token: string;
+}
+
+export interface Email {
+	email: string;
+}
