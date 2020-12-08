@@ -16,5 +16,4 @@ export class UserController {
 	logInUser(@BodyParams() user: UserLogin): Promise<void> {
 		return this.userService.logIn(user);
 	}
-
 }
