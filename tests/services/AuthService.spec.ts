@@ -32,7 +32,7 @@ describe("AuthService", () => {
 			setTimeout(() => {
 				verifiedAndProlongedToken = service.verifyAndProlongToken(token.token);
 				assert.notEqual(verifiedAndProlongedToken, token.token);
-			}, 500);
+			}, 1000);
 		});
 	});
 });
