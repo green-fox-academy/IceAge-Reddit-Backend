@@ -3,4 +3,5 @@ import { Posts } from '../entities/Posts';
 
 @EntityRepository(Posts)
 export class PostsRepository extends Repository<Posts> {
+
 }

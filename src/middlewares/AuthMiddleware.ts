@@ -1,4 +1,4 @@
-import { IMiddleware, Middleware, Req } from '@tsed/common';
+import { IMiddleware, Middleware, Req, Res } from '@tsed/common';
 import { Unauthorized } from '@tsed/exceptions';
 import { AuthService } from '../services/AuthService';
 
@@ -9,14 +9,18 @@ export class AuthMiddleware implements IMiddleware{
 		private authService: AuthService
 	) {}
 
-	use(@Req() request: Req): void {
+	use(@Req() request: Req, @Res() response: Res): void {
 		const token = request.header('Authorization');
 		if (!token) throw new Unauthorized('Access Denied!');
 
 		try {
-			this.authService.verifyToken(token.split(' ')[1]);
+			const prolongedToken = this.authService.verifyAndProlongToken(token.split(' ')[1]);
+			response.header('Prolonged-Token', prolongedToken); 
 		} catch (err) {
-			throw new Unauthorized('Invalid token');
+			if (err.message == 'jwt expired') {
+				throw new Unauthorized('Token expired!');
+			}
+			throw new Unauthorized('Invalid token!');
 		}
 	}
 }
