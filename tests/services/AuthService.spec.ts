@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import { assert } from "chai";
-import { JWToken } from '../../src/models/auth.types';
 import { AuthService } from '../../src/services/AuthService';
 
 describe("AuthService", () => {
@@ -16,7 +15,24 @@ describe("AuthService", () => {
 
 		it("should return token", () => {
 			const token = service.getToken(email);
+
 			assert.hasAllKeys(token, ['token']);
+			assert.isTrue(typeof token.token == 'string');
+		});
+	});
+	describe("verifyAndProlongToken()", () => {
+		it("should not fail", () => {	
+			const token = service.getToken(email);
+			assert.doesNotThrow(() => {service.verifyAndProlongToken(token.token)});
+		});
+		it("should return new token", () => {	
+			const token = service.getToken(email);
+			let verifiedAndProlongedToken;
+
+			setTimeout(() => {
+				verifiedAndProlongedToken = service.verifyAndProlongToken(token.token);
+				assert.notEqual(verifiedAndProlongedToken, token.token);
+			}, 500);
 		});
 	});
 });
