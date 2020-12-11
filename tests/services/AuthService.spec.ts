@@ -25,14 +25,14 @@ describe("AuthService", () => {
 			const token = service.getToken(email);
 			assert.doesNotThrow(() => {service.verifyAndProlongToken(token.token)});
 		});
-		it("should return new token", () => {	
+		it("should return new token", function(done) {	
 			const token = service.getToken(email);
-			let verifiedAndProlongedToken;
 
-			setTimeout(() => {
-				verifiedAndProlongedToken = service.verifyAndProlongToken(token.token);
+			setTimeout(function() {
+				const verifiedAndProlongedToken = service.verifyAndProlongToken(token.token);
 				assert.notEqual(verifiedAndProlongedToken, token.token);
-			}, 1000);
+				done();
+			}, 1000)
 		});
 	});
 });
