@@ -1,5 +1,5 @@
 import { BodyParams, Controller, Post } from '@tsed/common';
-import { Subreddits } from '../entities/Subreddits';
+import { SubredditsCreation } from '../models/auth.types';
 
 import { SubredditsService } from '../services/SubredditsService';
 
@@ -9,7 +9,8 @@ export class SubredditsController {
 	constructor(private subredditsService: SubredditsService) {}
 
 	@Post('/subreddits/create')
-	public async createSubreddit(@BodyParams() subreddits: Subreddits): Promise<Subreddits> {
+	// eslint-disable-next-line max-len
+	public async createSubreddit(@BodyParams() subreddits: SubredditsCreation): Promise<SubredditsCreation> {
 		return await this.subredditsService.create(subreddits);
 	}
 }
