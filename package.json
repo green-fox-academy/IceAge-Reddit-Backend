@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "build": "yarn tsc",
-    "postinstall": "npm run build",
+    "heroku-postinstall": "npm run build",
     "tsc": "tsc --project tsconfig.compile.json",
     "tsc:w": "tsc --project tsconfig.json -w",
     "start": "nodemon --watch \"src/**/*.ts\" --ignore \"node_modules/**/*\" --exec ts-node src/index.ts",
