@@ -9,7 +9,6 @@
     "start": "nodemon --watch \"src/**/*.ts\" --ignore \"node_modules/**/*\" --exec ts-node src/index.ts",
     "start:dev": "nodemon",
     "start:prod": "cross-env NODE_ENV=production node dist/index.js",
-	"heroku-postbuild": "cross-env NODE_ENV=production node dist/index.js",
 	"test": "mocha",
     "test:unit": "cross-env NODE_ENV=test mocha",
     "test:coverage": "cross-env NODE_ENV=test nyc mocha",
@@ -72,7 +71,8 @@
     "typescript": "^4.1.2"
   },
   "engines": {
-	"node": "14.14.0"
+	"node": "14.14.0",
+	"npm": "6.14.8"
   },
   "readme": "ERROR: No README data found!",
   "_id": "ice-age-reddit-backend@1.0.0"
