@@ -2,11 +2,11 @@ export default [
   {
 		"name": "default",
 		"type": "mysql",
-		"host": "localhost",
+		"host": process.env.DATASOURCE_HOST,
 		"port": 3306,
 		"username": process.env.DATASOURCE_USERNAME,
 		"password": process.env.DATASOURCE_PASSWORD,
-		"database": "reddit",
+		"database": process.env.DATASOURCE_DATABASE,
 		"synchronize": true,
 		"logging": false,
 		"entities": [
