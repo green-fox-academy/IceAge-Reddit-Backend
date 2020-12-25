@@ -2,11 +2,11 @@ export default [
   {
 		"name": "default",
 		"type": "mysql",
-		"host": "eu-cdbr-west-03.cleardb.net",
+		"host": process.env.DATASOURCE_HOST,
 		"port": 3306,
-		"username": "b5fdcf5b34d279",
-		"password": "34cd62fd",
-		"database": "heroku_ec936bad620fb1c",
+		"username": process.env.DATASOURCE_USERNAME,
+		"password": process.env.DATASOURCE_PASSWORD,
+		"database": process.env.DATASOURCE_DATABASE,
 		"synchronize": true,
 		"logging": false,
 		"entities": [
