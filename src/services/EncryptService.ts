@@ -10,8 +10,10 @@ export class EncryptService {
 	}
 
 	public async compareEncryptedPassword(
-		storedPassword: string, loginPassword: string): Promise<void> {
-		if (!await bcrypt.compare(loginPassword, storedPassword)) {
+		storedPassword: string, loginPassword: string): Promise<boolean> {
+		if (await bcrypt.compare(loginPassword, storedPassword)) {
+			return true;
+		} else {
 			throw new Unauthorized("Wrong password!");
 		}
 	}
