@@ -2,21 +2,21 @@ export default [
   {
 		"name": "default",
 		"type": "mysql",
-		"host": "localhost",
+		"host": process.env.DATASOURCE_HOST,
 		"port": 3306,
 		"username": process.env.DATASOURCE_USERNAME,
 		"password": process.env.DATASOURCE_PASSWORD,
-		"database": "reddit",
+		"database": process.env.DATASOURCE_DATABASE,
 		"synchronize": true,
 		"logging": false,
 		"entities": [
-			"${rootDir}/entities/**/*.ts"
+			"${rootDir}/entities/**/*.{js,ts}"
 		],
 		"migrations": [
-			"${rootDir}/migrations/**/*.ts"
+			"${rootDir}/migrations/**/*.{js,ts}"
 		],
 		"subscribers": [
-			"${rootDir}/subscribers/**/*.ts"
+			"${rootDir}/subscribers/**/*.{js,ts}"
 		],
 		"cli": {
 			"entitiesDir": "${rootDir}/entities",

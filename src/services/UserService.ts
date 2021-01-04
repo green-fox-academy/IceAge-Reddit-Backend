@@ -34,7 +34,7 @@ export class UserService {
 
 		const user: User | undefined = await this.userRepository.findByEmail(userLogin.email);
 		if (user) {
-			this.encryptService.compareEncryptedPassword(user.password, userLogin.password);
+			await this.encryptService.compareEncryptedPassword(user.password, userLogin.password);
 		} else {
 			throw new Unauthorized("This email is not registered!");
 		}
