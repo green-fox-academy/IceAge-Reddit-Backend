@@ -9,8 +9,8 @@ export class SubredditsController {
 	constructor(private subredditsService: SubredditsService) {}
 
 	@Post('/subreddits/create')
-	// eslint-disable-next-line max-len
-	public async createSubreddit(@BodyParams() subreddits: SubredditsCreation): Promise<SubredditsCreation> {
+	public async createSubreddit(@BodyParams() 
+	subreddits: SubredditsCreation): Promise<SubredditsCreation> {
 		return await this.subredditsService.create(subreddits);
 	}
 }
