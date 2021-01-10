@@ -10,7 +10,7 @@ export class UserController {
 	constructor(private postsService: PostsService) {}
 
 	@Get('/feed')
-	@UseBefore(AuthMiddleware)
+	// @UseBefore(AuthMiddleware)
 	getPostsFeed(): Promise<Posts[]> {
 		return this.postsService.findAll();
 	}
