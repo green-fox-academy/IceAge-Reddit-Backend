@@ -9,8 +9,10 @@ export class SubredditsController {
 	constructor(private subredditsService: SubredditsService) {}
 
 	@Post('/subreddits/create')
-	public async createSubreddit(@BodyParams() 
-	subreddits: SubredditsCreation): Promise<SubredditsCreation> {
+	public async createSubreddit(
+		@BodyParams() 
+		subreddits: SubredditsCreation
+	): Promise<SubredditsCreation> {
 		return await this.subredditsService.create(subreddits);
 	}
 }
