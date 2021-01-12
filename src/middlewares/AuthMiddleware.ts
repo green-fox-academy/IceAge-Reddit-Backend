@@ -17,11 +17,16 @@ export class AuthMiddleware implements IMiddleware{
 			const prolongedToken = this.authService.verifyAndProlongToken(token.split(' ')[1]);
 			response.header('Prolonged-Token', prolongedToken);
 			response.header('Access-Control-Expose-Headers', 'Prolonged-Token');
+			request.body.author = this.authService.getPayload(prolongedToken);
 		} catch (err) {
 			if (err.message == 'jwt expired') {
 				throw new Unauthorized('Token expired!');
 			}
 			throw new Unauthorized('Invalid token!');
 		}
+		
+		
+		
+		
 	}
 }
