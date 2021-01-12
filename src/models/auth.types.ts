@@ -14,3 +14,9 @@ export interface JWToken {
 export interface Email {
 	email: string;
 }
+
+export interface SubredditsCreation {
+	name: string;
+	title: string;
+	description: string;
+}
