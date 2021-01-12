@@ -8,7 +8,7 @@ export class UserController {
 	constructor(private subredditsService: SubredditsService, private postService: PostsService) {}
 
 	@Get('/subreddits')
-	// @UseBefore(AuthMiddleware)
+	@UseBefore(AuthMiddleware)
 	getSubredditsFeed(): Promise<Subreddits[]> {
 		return this.subredditsService.findAll();
     }
