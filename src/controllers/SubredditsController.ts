@@ -15,6 +15,7 @@ export class UserController {
 	}
 	
 	@Post('/subreddits/create')
+	@UseBefore(AuthMiddleware)
 	public async createSubreddit(
 		@BodyParams() 
 		subreddits: SubredditsCreation
