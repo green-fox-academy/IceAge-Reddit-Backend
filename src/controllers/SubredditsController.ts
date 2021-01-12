@@ -2,12 +2,11 @@ import { BodyParams, Controller, Get, Post, UseBefore } from "@tsed/common";
 import { Subreddits } from "../entities/Subreddits";
 import { AuthMiddleware } from "../middlewares/AuthMiddleware";
 import { SubredditsCreation } from "../models/auth.types";
-import { PostsService } from "../services/PostsService";
 import { SubredditsService } from "../services/SubredditsService";
 
 @Controller('/')
 export class UserController {
-	constructor(private subredditsService: SubredditsService, private postService: PostsService) {}
+	constructor(private subredditsService: SubredditsService) {}
 
 	@Get('/subreddits')
 	@UseBefore(AuthMiddleware)
