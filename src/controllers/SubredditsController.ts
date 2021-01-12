@@ -1,6 +1,7 @@
-import { Controller, Get, UseBefore } from "@tsed/common";
+import { BodyParams, Controller, Get, Post, UseBefore } from "@tsed/common";
 import { Subreddits } from "../entities/Subreddits";
 import { AuthMiddleware } from "../middlewares/AuthMiddleware";
+import { SubredditsCreation } from "../models/auth.types";
 import { PostsService } from "../services/PostsService";
 import { SubredditsService } from "../services/SubredditsService";
 
@@ -12,5 +13,13 @@ export class UserController {
 	@UseBefore(AuthMiddleware)
 	getSubredditsFeed(): Promise<Subreddits[]> {
 		return this.subredditsService.findAll();
-    }
+	}
+	
+	@Post('/subreddits/create')
+	public async createSubreddit(
+		@BodyParams() 
+		subreddits: SubredditsCreation
+	): Promise<SubredditsCreation> {
+		return await this.subredditsService.create(subreddits);
+	}
 }
