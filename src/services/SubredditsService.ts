@@ -17,8 +17,4 @@ export class SubredditsService {
 	public async findAll(): Promise <Subreddits[]> {
 		return await this.subredditsRepository.find();
 	}
-
-	public async findByName(name: string): Promise<Subreddits | undefined> {
-		return await this.subredditsRepository.findByName(name);
-	}
 }

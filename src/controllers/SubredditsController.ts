@@ -1,5 +1,4 @@
-import { Controller, Get, PathParams } from "@tsed/common";
-import { Posts } from "../entities/Posts";
+import { Controller, Get } from "@tsed/common";
 import { Subreddits } from "../entities/Subreddits";
 import { PostsService } from "../services/PostsService";
 import { SubredditsService } from "../services/SubredditsService";
@@ -12,11 +11,5 @@ export class UserController {
 	// @UseBefore(AuthMiddleware)
 	getSubredditsFeed(): Promise<Subreddits[]> {
 		return this.subredditsService.findAll();
-    }
-
-  @Get("/r/:name")
-  findOne(
-    @PathParams("name") name: string): Promise<Posts[] | undefined> {
-      return this.postService.findByName(name);
     }
 }

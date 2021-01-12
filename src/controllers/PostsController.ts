@@ -1,4 +1,4 @@
-import { Controller, Get, UseBefore } from '@tsed/common';
+import { Controller, Get, PathParams, UseBefore } from '@tsed/common';
 import { Posts } from '../entities/Posts';
 import { AuthMiddleware } from '../middlewares/AuthMiddleware';
 
@@ -14,4 +14,10 @@ export class UserController {
 	getPostsFeed(): Promise<Posts[]> {
 		return this.postsService.findAll();
 	}
+
+	@Get("/r/:name")
+	findOne(
+		@PathParams("name") name: string): Promise<Posts[] | undefined> {
+			return this.postsService.findByName(name);
+		}
 }
