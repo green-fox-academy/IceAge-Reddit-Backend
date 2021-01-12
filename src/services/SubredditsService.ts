@@ -14,6 +14,7 @@ export class SubredditsService {
 		await this.subredditsRepository.save(subreddits);
 	} 
 	
+	
 	public async findAll(): Promise <Subreddits[]> {
 		return await this.subredditsRepository.find();
 	}
