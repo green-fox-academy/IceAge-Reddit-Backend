@@ -1,5 +1,6 @@
-import { Controller, Get } from "@tsed/common";
+import { Controller, Get, UseBefore } from "@tsed/common";
 import { Subreddits } from "../entities/Subreddits";
+import { AuthMiddleware } from "../middlewares/AuthMiddleware";
 import { PostsService } from "../services/PostsService";
 import { SubredditsService } from "../services/SubredditsService";
 
