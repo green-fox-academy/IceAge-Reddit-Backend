@@ -15,7 +15,8 @@ export class UserController {
 		return this.postsService.findAll();
 	}
 
-	@Get("/r/:name")
+	@Get("/feed/r/:name")
+	// @UseBefore(AuthMiddleware)
 	findOne(
 		@PathParams("name") name: string): Promise<Posts[] | undefined> {
 			return this.postsService.findByName(name);
