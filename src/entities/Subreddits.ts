@@ -22,6 +22,6 @@ export class Subreddits {
 	@Column()
 	author: string;
 	
-	@OneToMany(type => Posts, posts => posts.subreddit, {cascade: true})
+	@OneToMany(() => Posts, posts => posts.subreddit, {cascade: true})
 	posts: Posts[];
 }

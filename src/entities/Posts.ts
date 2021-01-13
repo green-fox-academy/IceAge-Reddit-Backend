@@ -1,6 +1,7 @@
 import { type } from 'os';
 import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Subreddits } from './Subreddits';
+import { User } from './User';
 
 @Entity()
 export class Posts {
@@ -14,7 +15,7 @@ export class Posts {
 	@CreateDateColumn()
 	date_created: Date;
 
-	@ManyToOne(type => Subreddits, subreddit => subreddit.posts)
+	@ManyToOne(() => Subreddits, subreddit => subreddit.posts)
 	@Column()
 	subreddit: string;
 
@@ -32,5 +33,8 @@ export class Posts {
 
 	@Column()
 	description: string;
+
+	@ManyToOne(() => User, user => user.posts)
+	user: User;
 
 }
