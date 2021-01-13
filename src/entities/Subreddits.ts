@@ -16,10 +16,15 @@ export class Subreddits {
 	@Column()
 	description: string;
 	
-	@Column()
+	//nullable is just a temporal solution before we connect user to subreddit
+	@Column({
+		nullable: true
+	})
 	userCount: number;
 	
-	@Column()
+	@Column({
+		nullable: true
+	})
 	author: string;
 	
 	@OneToMany(() => Posts, posts => posts.subreddit, {cascade: true})
