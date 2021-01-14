@@ -24,9 +24,5 @@ export class AuthMiddleware implements IMiddleware{
 			}
 			throw new Unauthorized('Invalid token!');
 		}
-		
-		
-		
-		
 	}
 }
