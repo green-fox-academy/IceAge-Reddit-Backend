@@ -1,7 +1,6 @@
 import { Service } from '@tsed/common';
 import { Subreddits } from '../entities/Subreddits';
 import { SubredditsCreation } from '../models/auth.types';
-
 import { SubredditsRepository } from '../repositories/SubredditsRepository';
 
 @Service()
