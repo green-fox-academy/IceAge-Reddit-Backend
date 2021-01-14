@@ -8,17 +8,19 @@ import * as jwt from 'jsonwebtoken';
 describe("AuthMiddleware", () => {
 	const service: AuthMiddleware = new AuthMiddleware(new AuthService());
 	const authService: AuthService = new AuthService();
+	
 
 	let request: any;
 	let response: any;
 	beforeEach(() => {
 		request = {
 			headers: {
-				'Authorization': ''
+				'Authorization': '',
 			},
 			header: function(header: string):string {
 				return this.headers[header] as string;
-			}
+			},
+			author: "TB",
 		};
 		response = {
 			headers: {
@@ -33,7 +35,7 @@ describe("AuthMiddleware", () => {
 		it("should not fail", () => {
 			const token = 'Bearer ' + authService.getToken('email').token;
 			request.headers['Authorization'] = token;
-			
+
 			assert.doesNotThrow(() => service.use(request , response));
 		});
 
