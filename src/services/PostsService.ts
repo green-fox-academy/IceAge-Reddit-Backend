@@ -17,4 +17,8 @@ export class PostsService {
 	public async findAll(): Promise <Posts[]> {
 		return await this.postsRepository.find();
 	}
+
+	public async findByName(name: string): Promise<Posts[] | undefined> {
+		return await this.postsRepository.findByName(name);
+	}
 }
