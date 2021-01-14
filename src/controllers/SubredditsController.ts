@@ -5,7 +5,7 @@ import { SubredditsCreation } from "../models/auth.types";
 import { SubredditsService } from "../services/SubredditsService";
 
 @Controller('/')
-export class UserController {
+export class SubredditsController {
 	constructor(private subredditsService: SubredditsService) {}
 
 	@Get('/subreddits')
