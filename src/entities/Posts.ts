@@ -1,4 +1,3 @@
-import { type } from 'os';
 import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Subreddits } from './Subreddits';
 import { User } from './User';
