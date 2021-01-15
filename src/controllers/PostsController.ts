@@ -1,4 +1,4 @@
-import { Controller, Get, UseBefore } from '@tsed/common';
+import { Controller, Get, PathParams, UseBefore } from '@tsed/common';
 import { Posts } from '../entities/Posts';
 import { Subreddits } from '../entities/Subreddits';
 import { AuthMiddleware } from '../middlewares/AuthMiddleware';
@@ -22,4 +22,10 @@ export class UserController {
 	getSubreddits(): Promise<Subreddits[]> {
 		return this.subredditsService.findAll();
 	}
+	@Get("/feed/r/:name")
+	@UseBefore(AuthMiddleware)
+	findOne(
+		@PathParams("name") name: string): Promise<Posts[] | undefined> {
+			return this.postsService.findByName(name);
+		}
 }

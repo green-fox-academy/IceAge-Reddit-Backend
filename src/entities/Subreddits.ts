@@ -1,3 +1,4 @@
+import { Property } from "@tsed/schema";
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryColumn } from "typeorm";
 import { Posts } from './Posts';
 
@@ -5,6 +6,7 @@ import { Posts } from './Posts';
 export class Subreddits {
 	
 	@PrimaryColumn()
+	@Property()
 	name: string;
 
 	@Column()
