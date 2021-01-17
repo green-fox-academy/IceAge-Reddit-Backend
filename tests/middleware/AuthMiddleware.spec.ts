@@ -20,8 +20,8 @@ describe("AuthMiddleware", () => {
 			header: function(header: string):string {
 				return this.headers[header] as string;
 			},
-			author: "TB",
-		};
+			body: {}
+		}
 		response = {
 			headers: {
 				'Authorization': ''
@@ -35,7 +35,7 @@ describe("AuthMiddleware", () => {
 		it("should not fail", () => {
 			const token = 'Bearer ' + authService.getToken('email').token;
 			request.headers['Authorization'] = token;
-
+			
 			assert.doesNotThrow(() => service.use(request , response));
 		});
 
