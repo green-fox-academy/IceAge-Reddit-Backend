@@ -11,10 +11,11 @@ export class AuthMiddleware implements IMiddleware{
 
 	use(@Req() request: Req, @Res() response: Res): void {
 		const token = request.header('Authorization');
+		let prolongedToken;
 		if (!token) throw new Unauthorized('Access Denied!');
 
 		try {
-			const prolongedToken = this.authService.verifyAndProlongToken(token.split(' ')[1]);
+			prolongedToken = this.authService.verifyAndProlongToken(token.split(' ')[1]);
 			response.header('Prolonged-Token', prolongedToken);
 			response.header('Access-Control-Expose-Headers', 'Prolonged-Token');
 		} catch (err) {
@@ -23,5 +24,6 @@ export class AuthMiddleware implements IMiddleware{
 			}
 			throw new Unauthorized('Invalid token!');
 		}
+		request.body.author = this.authService.getPayload(prolongedToken);
 	}
 }
