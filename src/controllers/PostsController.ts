@@ -28,7 +28,8 @@ export class UserController {
 		@PathParams("name") name: string): Promise<Posts[] | undefined> {
 			return this.postsService.findByName(name);
 		}
-
+		
+		//Jirinka
 		@Post('/subreddits/posts/create')
 		@UseBefore(AuthMiddleware)
 		public async createPost(
