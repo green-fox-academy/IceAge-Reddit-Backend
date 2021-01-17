@@ -10,8 +10,8 @@ export class PostsService {
 		private postsRepository: PostsRepository,
 	) {}
 
-	public async create(post: Posts): Promise<void> {
-		await this.postsRepository.save(post);
+	public async create(post: Posts): Promise<Posts> {
+		return await this.postsRepository.save(post);
 	} 
 		
 	public async findAll(): Promise <Posts[]> {

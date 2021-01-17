@@ -1,4 +1,4 @@
-import { Controller, Get, PathParams, UseBefore } from '@tsed/common';
+import { BodyParams, Controller, Get, PathParams, Post, UseBefore } from '@tsed/common';
 import { Posts } from '../entities/Posts';
 import { Subreddits } from '../entities/Subreddits';
 import { AuthMiddleware } from '../middlewares/AuthMiddleware';
@@ -28,4 +28,13 @@ export class UserController {
 		@PathParams("name") name: string): Promise<Posts[] | undefined> {
 			return this.postsService.findByName(name);
 		}
+
+		@Post('/subreddits/posts/create')
+		@UseBefore(AuthMiddleware)
+		public async createPost(
+			@BodyParams()
+			post: Posts
+		): Promise<Posts> {
+			return this.postsService.create(post);
+		}	
 }
