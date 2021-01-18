@@ -1,12 +1,10 @@
-import { Controller, Get, PathParams, UseBefore } from '@tsed/common';
+import { BodyParams, Controller, Get, PathParams, Post, UseBefore } from '@tsed/common';
 import { Posts } from '../entities/Posts';
 import { AuthMiddleware } from '../middlewares/AuthMiddleware';
-
 import { PostsService } from '../services/PostsService';
 
-
 @Controller('/')
-export class PostsController {
+export class PostController {
 	constructor(private postsService: PostsService) {}
 
 	@Get('/feed')
@@ -21,4 +19,13 @@ export class PostsController {
 		@PathParams("name") name: string): Promise<Posts[] | undefined> {
 			return this.postsService.findByName(name);
 		}
+		
+	@Post('/subreddits/posts/create')
+	@UseBefore(AuthMiddleware)
+	public async createPost(
+		@BodyParams()
+		post: Posts
+	): Promise<Posts> {
+		return this.postsService.create(post);
+	}	
 }
