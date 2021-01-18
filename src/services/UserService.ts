@@ -26,7 +26,7 @@ export class UserService {
 			await this.encryptUsersPassword(userCreation);
 			this.userRepository.save(userCreation);
 		} 
-		return this.authService.getToken(userCreation.email);
+		return this.authService.getToken(userCreation.username);
 	}
 
 	public async logIn(userLogin: UserLogin): Promise<JWToken> {
@@ -39,7 +39,7 @@ export class UserService {
 			throw new Unauthorized("This email is not registered!");
 		}
 
-		return this.authService.getToken(userLogin.email);
+		return this.authService.getToken(user.username);
 	}
 	
 	private async isAvailableUsername(username: string): Promise<boolean> {

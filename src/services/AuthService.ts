@@ -1,17 +1,17 @@
 import { Service } from '@tsed/common';
 import * as jwt from 'jsonwebtoken';
 
-import { Email, JWToken } from '../models/auth.types';
+import { JWToken, Username } from '../models/auth.types';
 
 @Service()
 export class AuthService {
 
 	private static TOKEN_EXPIRATION = '24h';
 
-	public getToken(email: string): JWToken {
+	public getToken(username: string): JWToken {
 		const token: JWToken = {
 			token: jwt.sign(
-				{ email: email },
+				{ username: username },
 				process.env.TOKEN_SECRET as string,
 				{ expiresIn: AuthService.TOKEN_EXPIRATION }
 			)
@@ -20,7 +20,12 @@ export class AuthService {
 	}
 
 	public verifyAndProlongToken(token: string): string {
-		const payload: Email = jwt.verify(token, process.env.TOKEN_SECRET as string) as Email;
-		return this.getToken(payload.email).token;
+		const payload: Username = jwt.verify(token, process.env.TOKEN_SECRET as string) as Username;
+		return this.getToken(payload.username).token;
+	}
+
+	public getPayload(token: string): string {
+		const payload: Username = jwt.decode(token) as Username;
+		return payload.username;
 	}
 }
