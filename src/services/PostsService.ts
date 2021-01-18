@@ -19,7 +19,7 @@ export class PostsService {
 				throw new Unauthorized('Tell others also the title of your post!');
 			}	
 			if (!post.subreddit){
-			throw new Unauthorized('Choose a subbredit which belongs to the post!');
+				throw new Unauthorized('Choose a subbredit which belongs to the post!');
 		} else return await this.postsRepository.save(post);
 	}
 		
