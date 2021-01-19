@@ -1,5 +1,5 @@
 import { Service } from '@tsed/common';
-import { Unauthorized } from '@tsed/exceptions';
+import { NotFound, Unauthorized } from '@tsed/exceptions';
 import { Posts } from '../entities/Posts';
 
 import { PostsRepository } from '../repositories/PostsRepository';
@@ -25,7 +25,16 @@ export class PostsService {
 		
 	public async findAll(): Promise <Posts[]> {
 		return await this.postsRepository.find();
-	}
+    }
+    
+    public async findById(id: number): Promise<Posts> {
+        const post = await this.postsRepository.findOne(id);
+        if (post) {
+            return post;
+        } else {
+            throw new NotFound(`Post with id: ${id} has not been found!`);
+        }
+    }
 
 	public async findByName(name: string): Promise<Posts[] | undefined> {
 		return await this.postsRepository.findByName(name);
