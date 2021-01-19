@@ -1,6 +1,6 @@
 import { Service } from '@tsed/common';
 import { Unauthorized } from '@tsed/exceptions';
-import { Post } from '../entities/Post';
+import { Posts } from '../entities/Posts';
 
 import { PostsRepository } from '../repositories/PostsRepository';
 
@@ -11,7 +11,7 @@ export class PostsService {
 		private postsRepository: PostsRepository,
 	) {}
 
-	public async create(post: Post): Promise<Post> {
+	public async create(post: Posts): Promise<Posts> {
 			if(!post.description){
 				throw new Unauthorized('We want to see your awesome description!');
 			} 
@@ -23,11 +23,11 @@ export class PostsService {
 		} else return await this.postsRepository.save(post);
 	}
 		
-	public async findAll(): Promise <Post[]> {
+	public async findAll(): Promise <Posts[]> {
 		return await this.postsRepository.find();
 	}
 
-	public async findByName(name: string): Promise<Post[] | undefined> {
+	public async findByName(name: string): Promise<Posts[] | undefined> {
 		return await this.postsRepository.findByName(name);
 	}
 }

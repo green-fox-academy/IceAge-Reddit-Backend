@@ -1,6 +1,6 @@
 import { Property } from "@tsed/schema";
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryColumn } from "typeorm";
-import { Post } from './Post';
+import { Posts } from './Posts';
 
 @Entity()
 export class Subreddits {
@@ -29,6 +29,6 @@ export class Subreddits {
 	})
 	author: string;
 	
-	@OneToMany(() => Post, posts => posts.subreddit, {cascade: true})
-	posts: Post[];
+	@OneToMany(() => Posts, posts => posts.subreddit, {cascade: true})
+	posts: Posts[];
 }

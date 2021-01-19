@@ -1,9 +1,9 @@
 import { EntityRepository, Repository } from "typeorm";
-import { Post } from '../entities/Post';
+import { Posts } from '../entities/Posts';
 
-@EntityRepository(Post)
-export class PostsRepository extends Repository<Post> {
-    public async findByName(subredditName: string): Promise <Post[] | undefined> {
+@EntityRepository(Posts)
+export class PostsRepository extends Repository<Posts> {
+    public async findByName(subredditName: string): Promise <Posts[] | undefined> {
         return await this.find({ where: { subreddit: subredditName} });
     }
 

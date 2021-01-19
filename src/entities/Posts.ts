@@ -4,8 +4,8 @@ import { Comment } from "./Comment";
 import { Subreddits } from './Subreddits';
 import { User } from './User';
 
-@Entity({name: "posts"})
-export class Post {
+@Entity()
+export class Posts {
 	
 	@PrimaryGeneratedColumn()
 	id: number;
