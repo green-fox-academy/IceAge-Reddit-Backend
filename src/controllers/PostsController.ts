@@ -1,5 +1,5 @@
 import { BodyParams, Controller, Get, PathParams, Post, UseBefore } from '@tsed/common';
-import { Posts } from '../entities/Posts';
+import { Post } from '../entities/Post';
 import { AuthMiddleware } from '../middlewares/AuthMiddleware';
 import { PostsService } from '../services/PostsService';
 
@@ -9,14 +9,14 @@ export class PostController {
 
 	@Get('/feed')
 	@UseBefore(AuthMiddleware)
-	getPostsFeed(): Promise<Posts[]> {
+	getPostsFeed(): Promise<Post[]> {
 		return this.postsService.findAll();
 	}
 
 	@Get("/feed/r/:name")
 	@UseBefore(AuthMiddleware)
 	findOne(
-		@PathParams("name") name: string): Promise<Posts[] | undefined> {
+		@PathParams("name") name: string): Promise<Post[] | undefined> {
 			return this.postsService.findByName(name);
 		}
 		
@@ -24,8 +24,8 @@ export class PostController {
 	@UseBefore(AuthMiddleware)
 	public async createPost(
 		@BodyParams()
-		post: Posts
-	): Promise<Posts> {
+		post: Post
+	): Promise<Post> {
 		return this.postsService.create(post);
 	}	
 }
