@@ -1,4 +1,6 @@
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToOne, 
+    OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Comment } from "./Comment";
 import { Subreddits } from './Subreddits';
 import { User } from './User';
 
@@ -34,6 +36,8 @@ export class Posts {
 	description: string;
 
 	@ManyToOne(() => User, user => user.posts)
-	user: User;
-
+    user: User;
+    
+    @OneToMany(() => Comment, comment => comment.post)
+    comments: Comment[];
 }
