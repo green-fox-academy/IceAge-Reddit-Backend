@@ -16,9 +16,10 @@ export class PostController {
 	@Get("/feed/r/:name")
 	@UseBefore(AuthMiddleware)
 	findOne(
-		@PathParams("name") name: string): Promise<Posts[] | undefined> {
-			return this.postsService.findByName(name);
-		}
+        @PathParams("name") name: string
+    ): Promise<Posts[] | undefined> {
+		return this.postsService.findByName(name);
+    }
 		
 	@Post('/subreddits/posts/create')
 	@UseBefore(AuthMiddleware)
