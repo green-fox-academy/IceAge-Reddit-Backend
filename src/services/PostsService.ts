@@ -32,11 +32,10 @@ export class PostsService {
     
     public async findById(id: number): Promise<Posts> {
         const post = await this.postsRepository.findOne(id);
-        if (post) {
-            return post;
-        } else {
-            throw new NotFound(`Post with id: ${id} has not been found!`);
-        }
+        
+        if (post) return post;
+
+        throw new NotFound(`Post with id: ${id} has not been found!`);
     }
 
 	public async findByName(name: string): Promise<Posts[] | undefined> {
