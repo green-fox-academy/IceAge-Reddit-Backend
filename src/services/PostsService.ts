@@ -12,8 +12,11 @@ export class PostsService {
 	) {}
 
 	public async create(post: Posts): Promise<Posts> {
-			if(!post.description){
+			if(!post.description && post.post_type==='text'){
 				throw new Unauthorized('We want to see your awesome description!');
+			} 
+			if(!post.posted_url && post.post_type==='url'){
+				throw new Unauthorized("Don't forget the url!");
 			} 
 			if(!post.title) {
 				throw new Unauthorized('Tell others also the title of your post!');
