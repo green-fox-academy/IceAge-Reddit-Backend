@@ -1,5 +1,6 @@
 import { Service } from '@tsed/common';
 import { Comment } from '../entities/Comment';
+import { CommentsRepository } from '../repositories/CommentsRepository';
 
 @Service()
 export class CommentsService {
@@ -9,6 +10,6 @@ export class CommentsService {
 	) {}
 
 	public async create(comment: Comment): Promise<Comment> {
-		return await this.postsRepository.save(post);
+		return await this.commentsRepository.save(comment);
 	}
 }
