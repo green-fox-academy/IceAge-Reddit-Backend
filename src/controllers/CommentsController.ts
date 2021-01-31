@@ -1,6 +1,7 @@
 import { BodyParams, Controller, Post, UseBefore } from "@tsed/common";
 import { Comment } from "../entities/Comment";
 import { AuthMiddleware } from "../middlewares/AuthMiddleware";
+import { CommentsService } from "../services/CommentsService";
 
 @Controller('/comments')
 @UseBefore(AuthMiddleware)
