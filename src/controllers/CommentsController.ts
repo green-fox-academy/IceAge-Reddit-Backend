@@ -1,6 +1,7 @@
 import { BodyParams, Controller, Post, UseBefore } from "@tsed/common";
 import { Comment } from "../entities/Comment";
 import { AuthMiddleware } from "../middlewares/AuthMiddleware";
+import { NewComment } from "../models/comment.types";
 import { CommentsService } from "../services/CommentsService";
 
 @Controller('/comments')
@@ -13,8 +14,8 @@ export class CommentsController {
 	@Post('/create')
 	public async createComment(
 		@BodyParams() 
-		comment: Comment
+		newComment: NewComment
 	): Promise<Comment> {
-		return await this.commentsService.create(comment);
+		return await this.commentsService.create(newComment);
     }
 }
