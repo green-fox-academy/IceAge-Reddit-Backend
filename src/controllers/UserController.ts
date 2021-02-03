@@ -1,6 +1,6 @@
 import { Controller, Get, UseBefore } from "@tsed/common";
-import { Comment } from "../entities/Comment";
 import { AuthMiddleware } from "../middlewares/AuthMiddleware";
+import { SimpleUser } from "../models/user.types";
 import { UserService } from "../services/UserService";
 
 @Controller('/users')
@@ -11,7 +11,7 @@ export class UserController {
     ) {}
 	
 	@Get('/')
-	public async getAllUsers(): Promise<Comment> {
-		return await this.userService.create(newComment);
+	public async getAllUsers(): Promise<SimpleUser[]> {
+		return await this.userService.getAllUsers();
     }
 }
