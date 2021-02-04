@@ -7,7 +7,7 @@ import { UserService } from '../services/UserService';
 @Controller('/auth')
 @ContentType("application/json")
 @Returns(200, Object)
-export class UserController {
+export class AuthController {
 	constructor(private userService: UserService) {}
 
 	@Post('/sign-in')
