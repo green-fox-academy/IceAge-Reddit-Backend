@@ -15,6 +15,11 @@ export interface Username {
 	username: string;
 }
 
+export interface changeUsername {
+	id: number;
+	username: string;
+}
+
 export interface SubredditsCreation {
 	name: string;
 	title: string;

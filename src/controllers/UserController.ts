@@ -1,7 +1,7 @@
 import { BodyParams, Controller, Post } from '@tsed/common';
 import { ContentType, Returns } from '@tsed/schema';
 
-import { JWToken, UserCreation, UserLogin } from '../models/auth.types';
+import { changeUsername, JWToken, UserCreation, UserLogin } from '../models/auth.types';
 import { UserService } from '../services/UserService';
 
 @Controller('/auth')
@@ -18,5 +18,10 @@ export class UserController {
 	@Post('/log-in')
 	public async logInUser(@BodyParams() user: UserLogin): Promise<JWToken> {
 		return await this.userService.logIn(user);
+	}
+
+	@Post('/u/change-name')
+	public async changeUserName (@BodyParams() user: changeUsername): Promise<JWToken> {
+		return await this.userService.changeUserName(user);
 	}
 }

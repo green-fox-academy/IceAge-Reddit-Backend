@@ -2,7 +2,7 @@ import { Service } from '@tsed/common';
 import { Unauthorized } from '@tsed/exceptions';
 
 import { User } from '../entities/User';
-import { JWToken, UserCreation, UserLogin } from '../models/auth.types';
+import { changeUsername, JWToken, UserCreation, UserLogin } from '../models/auth.types';
 import { UserRepository } from '../repositories/UserRepository';
 import { AuthService } from './AuthService';
 import { EncryptService } from './EncryptService';
@@ -61,5 +61,21 @@ export class UserService {
 	private async encryptUsersPassword(userCreation: UserCreation): Promise<void> {
 		userCreation.password = 
 		await this.encryptService.getEncryptedPassword(userCreation.password);
+	}
+
+	public async changeUserName(user: changeUsername): Promise<JWToken> {
+		const currentUser = await this.userRepository.findOne(user.id);
+		
+		if (currentUser && await this.isAvailableUsername(user.username)) {
+			currentUser.username = user.username;
+			this.userRepository.save(currentUser);
+			return this.authService.getToken(currentUser.username);
+		}
+
+		if (!await this.isAvailableUsername(user.username)) {
+			throw new Unauthorized("This user name already exists!");
+		}
+
+		throw new Unauthorized("This user does not exists");
 	}
 }
