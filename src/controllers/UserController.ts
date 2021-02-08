@@ -1,22 +1,17 @@
-import { BodyParams, Controller, Post } from '@tsed/common';
-import { ContentType, Returns } from '@tsed/schema';
+import { Controller, Get, UseBefore } from "@tsed/common";
+import { AuthMiddleware } from "../middlewares/AuthMiddleware";
+import { SimpleUser } from "../models/user.types";
+import { UserService } from "../services/UserService";
 
-import { JWToken, UserCreation, UserLogin } from '../models/auth.types';
-import { UserService } from '../services/UserService';
-
-@Controller('/auth')
-@ContentType("application/json")
-@Returns(200, Object)
+@Controller('/users')
+@UseBefore(AuthMiddleware)
 export class UserController {
-	constructor(private userService: UserService) {}
-
-	@Post('/sign-in')
-	public async createUser(@BodyParams() user: UserCreation): Promise<JWToken> {
-		return await this.userService.create(user);
-	}
-
-	@Post('/log-in')
-	public async logInUser(@BodyParams() user: UserLogin): Promise<JWToken> {
-		return await this.userService.logIn(user);
-	}
+	constructor(
+        private userService: UserService,
+    ) {}
+	
+	@Get('/')
+	public async getAllUsers(): Promise<SimpleUser[]> {
+		return await this.userService.getAllUsers();
+    }
 }

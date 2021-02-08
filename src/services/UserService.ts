@@ -3,6 +3,7 @@ import { Unauthorized } from '@tsed/exceptions';
 
 import { User } from '../entities/User';
 import { JWToken, UserCreation, UserLogin } from '../models/auth.types';
+import { SimpleUser } from '../models/user.types';
 import { UserRepository } from '../repositories/UserRepository';
 import { AuthService } from './AuthService';
 import { EncryptService } from './EncryptService';
@@ -27,7 +28,11 @@ export class UserService {
 			this.userRepository.save(userCreation);
 		} 
 		return this.authService.getToken(userCreation.username);
-	}
+    }
+    
+    public async getAllUsers(): Promise<SimpleUser[]> {
+        return await this.userRepository.getAllSimpleUsers();
+    }
 
 	public async logIn(userLogin: UserLogin): Promise<JWToken> {
 		this.userValidationService.validateUserLogin(userLogin);
