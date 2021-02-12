@@ -1,17 +1,26 @@
 import { Service } from '@tsed/common';
 import { NotFound, Unauthorized } from '@tsed/exceptions';
 import { Posts } from '../entities/Posts';
+import { User } from '../entities/User';
 
 import { PostsRepository } from '../repositories/PostsRepository';
+import { UserRepository } from '../repositories/UserRepository';
 
 @Service()
 export class PostsService {
 
 	constructor(
 		private postsRepository: PostsRepository,
+		private userRepository: UserRepository,
 	) {}
 
 	public async create(post: Posts): Promise<Posts> {
+
+		const user = await this.setUser(post.author);
+		if (user != undefined) {
+			post.user = user;	
+		} 
+
 			if(!post.description && post.post_type==='text'){
 				throw new Unauthorized('We want to see your awesome description!');
 			} 
@@ -23,7 +32,8 @@ export class PostsService {
 			}	
 			if (!post.subreddit){
 				throw new Unauthorized('Choose a subbredit which belongs to the post!');
-		} else return await this.postsRepository.save(post);
+			} 
+		return await this.postsRepository.save(post);
 	}
 		
 	public async findAll(): Promise <Posts[]> {
@@ -40,5 +50,10 @@ export class PostsService {
 
 	public async findByName(name: string): Promise<Posts[] | undefined> {
 		return await this.postsRepository.findByName(name);
+	}
+
+	public async setUser(userName: string): Promise<User | undefined>{
+		return await this.userRepository.findByUsername(userName);
+
 	}
 }

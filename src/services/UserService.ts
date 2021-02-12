@@ -1,9 +1,10 @@
 import { Service } from '@tsed/common';
-import { Unauthorized } from '@tsed/exceptions';
+import { Unauthorized, NotFound } from '@tsed/exceptions';
 
 import { User } from '../entities/User';
 import { JWToken, UserCreation, UserLogin } from '../models/auth.types';
-import { SimpleUser } from '../models/user.types';
+import { SimpleUser, UserWithComments } from '../models/user.types';
+import { CommentsRepository } from '../repositories/CommentsRepository';
 import { UserRepository } from '../repositories/UserRepository';
 import { AuthService } from './AuthService';
 import { EncryptService } from './EncryptService';
@@ -16,7 +17,8 @@ export class UserService {
 		private userRepository: UserRepository,
 		private userValidationService: UserValidationService,
 		private encryptService: EncryptService,
-		private authService: AuthService
+		private authService: AuthService,
+		private commentsRepository: CommentsRepository
 	) {}
 
 	public async create(userCreation: UserCreation): Promise<JWToken> {
@@ -66,5 +68,25 @@ export class UserService {
 	private async encryptUsersPassword(userCreation: UserCreation): Promise<void> {
 		userCreation.password = 
 		await this.encryptService.getEncryptedPassword(userCreation.password);
+	}
+	
+	public async getOneUser(id: number): Promise<UserWithComments | undefined> {
+		const userWithComments: UserWithComments = {} as UserWithComments;
+		const user = await this.userRepository.findById(id);
+		
+		if (user == undefined) {
+			throw new NotFound("This user doesn't exist");
+		}
+		else {
+			userWithComments.id = user.id;
+			userWithComments.date_created  = user.date_created;
+			userWithComments.posts = user.posts;
+			userWithComments.username = user.username;
+			const comments = await this.commentsRepository.findByAuthorName(user.username);
+			if (comments != undefined){
+				userWithComments.comments = comments;
+			} else userWithComments.comments = [];
+		}
+		return userWithComments;		
 	}
 }

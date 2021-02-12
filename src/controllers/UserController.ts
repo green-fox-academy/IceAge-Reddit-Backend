@@ -1,6 +1,6 @@
-import { Controller, Get, UseBefore } from "@tsed/common";
+import { Controller, Get, PathParams, UseBefore } from "@tsed/common";
 import { AuthMiddleware } from "../middlewares/AuthMiddleware";
-import { SimpleUser } from "../models/user.types";
+import { SimpleUser, UserWithComments } from "../models/user.types";
 import { UserService } from "../services/UserService";
 
 @Controller('/users')
@@ -13,5 +13,14 @@ export class UserController {
 	@Get('/')
 	public async getAllUsers(): Promise<SimpleUser[]> {
 		return await this.userService.getAllUsers();
+	}
+	
+	@Get('/:id')
+	@UseBefore(AuthMiddleware)
+	findOne(
+        @PathParams("id") id: number
+    ): Promise<UserWithComments | undefined> {
+		return this.userService.getOneUser(id);
     }
+
 }

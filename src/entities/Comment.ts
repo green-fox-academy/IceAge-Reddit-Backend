@@ -1,5 +1,6 @@
 import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Posts } from "./Posts";
+import { User } from "./User";
 
 @Entity({name: "comments"})
 export class Comment {
@@ -18,4 +19,7 @@ export class Comment {
 
     @Column()
     description: string;
+
+    @ManyToOne(() => User, user => user.comments)
+    user: User;
 }

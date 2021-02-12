@@ -4,7 +4,7 @@ import { SimpleUser } from "../models/user.types";
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
-	public async findByUsername(usernameToFind: string): Promise<User | undefined> {
+	public async findByUsername(usernameToFind: string): Promise<User | undefined > {
 		return await this.findOne({ where: { username: usernameToFind } });
 	}
 
@@ -15,5 +15,9 @@ export class UserRepository extends Repository<User> {
     public async getAllSimpleUsers(): Promise<SimpleUser[]> {
         return await 
         (this.query(`SELECT id, username, date_created FROM reddit.user;`)) as SimpleUser[];
+    }
+
+    public async findById(idToFind: number): Promise<User | undefined>{
+        return await this.findOne({ where: { id: idToFind} });
     }
 }
