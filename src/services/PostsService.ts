@@ -52,7 +52,7 @@ export class PostsService {
 		return await this.postsRepository.findByName(name);
 	}
 
-	public async setUser(userName: string): Promise<User | undefined>{
+	private async setUser(userName: string): Promise<User | undefined>{
 		return await this.userRepository.findByUsername(userName);
 
 	}

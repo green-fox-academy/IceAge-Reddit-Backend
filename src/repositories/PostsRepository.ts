@@ -6,4 +6,7 @@ export class PostsRepository extends Repository<Posts> {
     public async findByName(subredditName: string): Promise <Posts[] | undefined> {
         return await this.find({ where: { subreddit: subredditName} });
     }
+    public async findById (idToFind: number): Promise<Posts | undefined>{
+        return await this.findOne({where: { id: idToFind} });
+    }
 }

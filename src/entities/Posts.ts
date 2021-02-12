@@ -38,7 +38,7 @@ export class Posts {
 	@ManyToOne(() => User, user => user.posts)
     user: User;
     
-    @OneToMany(() => Comment, comment => comment.post,{
+    @OneToMany(() => Comment, comment => comment.post, {
         eager: true
     })
     comments: Comment[];

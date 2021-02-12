@@ -69,24 +69,16 @@ export class UserService {
 		userCreation.password = 
 		await this.encryptService.getEncryptedPassword(userCreation.password);
 	}
-	
-	public async getOneUser(id: number): Promise<UserWithComments | undefined> {
-		const userWithComments: UserWithComments = {} as UserWithComments;
+
+	public async getOneUser(id: number): Promise<User> {
 		const user = await this.userRepository.findById(id);
 		
 		if (user == undefined) {
 			throw new NotFound("This user doesn't exist");
 		}
-		else {
-			userWithComments.id = user.id;
-			userWithComments.date_created  = user.date_created;
-			userWithComments.posts = user.posts;
-			userWithComments.username = user.username;
-			const comments = await this.commentsRepository.findByAuthorName(user.username);
-			if (comments != undefined){
-				userWithComments.comments = comments;
-			} else userWithComments.comments = [];
-		}
-		return userWithComments;		
+		else return user;
 	}
+
+	
+
 }

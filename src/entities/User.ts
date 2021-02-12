@@ -23,6 +23,6 @@ export class User {
 	@OneToMany( () => Posts, post => post.user, {eager: true})
 	posts:Posts[];
 
-	@OneToMany( () => Comment, comment =>comment.user )
+	@OneToMany( () => Comment, comment =>comment.user , {eager: true})
 	comments: Comment[];
 }
