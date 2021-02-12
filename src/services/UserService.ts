@@ -68,17 +68,16 @@ export class UserService {
 		await this.encryptService.getEncryptedPassword(userCreation.password);
 	}
 
-	public async getOneUser(id: number): Promise<UserWithComments> {
-		const user = await this.createUserDTO(id);
-		
+	public async getOneUser(id: number): Promise<UserWithComments | undefined> {
+		const user = await this.userRepository.findById(id);
+			
 		if (user == undefined) {
 			throw new NotFound("This user doesn't exist");
 		}
-		else return user; 
+		else return this.createUserDTO(user); 
 	}
 
-	private async createUserDTO (id: number): Promise<UserWithComments | undefined> {
-		const user = await this.userRepository.findById(id);
+	public createUserDTO (user: User): UserWithComments | undefined {
 
 		if (user != undefined){
 			const userWithComments: UserWithComments = {
@@ -88,7 +87,7 @@ export class UserService {
 				comments: user.comments,
 				posts: user.posts,
 		} 
-		return userWithComments 
-	}
-}
+		return userWithComments ;
+		}
+	}	
 }
