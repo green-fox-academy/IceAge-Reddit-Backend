@@ -3,7 +3,7 @@ import { Unauthorized, NotFound } from '@tsed/exceptions';
 
 import { User } from '../entities/User';
 import { JWToken, UserCreation, UserLogin } from '../models/auth.types';
-import { SimpleUser, UserWithComments } from '../models/user.types';
+import { SimpleUser, UserDTO } from '../models/user.types';
 import { UserRepository } from '../repositories/UserRepository';
 import { AuthService } from './AuthService';
 import { EncryptService } from './EncryptService';
@@ -68,7 +68,7 @@ export class UserService {
 		await this.encryptService.getEncryptedPassword(userCreation.password);
 	}
 
-	public async getOneUser(id: number): Promise<UserWithComments | undefined> {
+	public async getOneUser(id: number): Promise<UserDTO | undefined> {
 		const user = await this.userRepository.findById(id);
 			
 		if (user == undefined) {
@@ -77,17 +77,17 @@ export class UserService {
 		else return this.createUserDTO(user); 
 	}
 
-	public createUserDTO (user: User): UserWithComments | undefined {
+	public createUserDTO (user: User): UserDTO | undefined {
 
 		if (user != undefined){
-			const userWithComments: UserWithComments = {
+			const userDTO: UserDTO = {
 				id: user.id,
 				username: user.username,
 				date_created: user.date_created,
 				comments: user.comments,
 				posts: user.posts,
 		} 
-		return userWithComments ;
+		return userDTO;
 		}
 	}	
 }

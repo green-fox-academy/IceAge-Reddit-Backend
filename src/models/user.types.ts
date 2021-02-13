@@ -7,7 +7,7 @@ export interface SimpleUser {
     date_created: Date;
 }
 
-export interface UserWithComments {
+export interface UserDTO {
     id: number;
     username: string;
     date_created: Date;
