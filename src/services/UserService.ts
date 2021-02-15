@@ -1,5 +1,8 @@
 import { Service } from '@tsed/common';
 import { Unauthorized, NotFound } from '@tsed/exceptions';
+import { forEachLeadingCommentRange } from 'typescript';
+import { promisify } from 'util';
+import { Posts } from '../entities/Posts';
 
 import { User } from '../entities/User';
 import { JWToken, UserCreation, UserLogin } from '../models/auth.types';
@@ -68,7 +71,7 @@ export class UserService {
 		await this.encryptService.getEncryptedPassword(userCreation.password);
 	}
 
-	public async getOneUser(id: number): Promise<UserDTO | undefined> {
+	public async getOneUser(id: number): Promise<UserDTO> {
 		const user = await this.userRepository.findById(id);
 			
 		if (user == undefined) {
@@ -77,17 +80,33 @@ export class UserService {
 		else return this.createUserDTO(user); 
 	}
 
-	public createUserDTO (user: User): UserDTO | undefined {
+	public createUserDTO(user: User): UserDTO {
 
-		if (user != undefined){
 			const userDTO: UserDTO = {
 				id: user.id,
 				username: user.username,
 				date_created: user.date_created,
-				comments: user.comments,
+				comments: this.loadAllComments(user);
 				posts: user.posts,
 		} 
 		return userDTO;
-		}
 	}	
+
+	private async loadAllComments(user: User): Promise<Comment[]> {
+		const comments: Comment[] = await Promise.all(user.comments.map( async function (comment) {
+			const post: Posts = await comment.post;
+			const stableComment: Comment = {
+				id: comment.id,
+				postId: post.id,
+				author: comment.author,
+				dateCreated: comment.date_created,
+				description: comment.description,
+			}
+			return stableComment;
+		}));
+		return comments
+		
+
+	}
+
 }

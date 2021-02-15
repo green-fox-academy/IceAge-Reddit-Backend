@@ -26,7 +26,7 @@ export class CommentsService {
         if (newComment.description.length == 0 || typeof newComment.description != 'string') 
         throw new NotFound("Comment description is empty or not a string!");
         
-        const author = await this.setUser(postToComment.author);
+        const author = await this.setUser(newComment.author);
         if(author != undefined){
                 newComment.user = author;
         }

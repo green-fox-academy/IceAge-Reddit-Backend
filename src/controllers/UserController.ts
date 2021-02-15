@@ -16,10 +16,9 @@ export class UserController {
 	}
 	
 	@Get('/:id')
-	@UseBefore(AuthMiddleware)
 	findOne(
         @PathParams("id") id: number
-    ): Promise<UserDTO | undefined> {
+    ): Promise<UserDTO> {
 		return this.userService.getOneUser(id);
     }
 

@@ -9,7 +9,9 @@ export class Comment {
     id: number;
 
     @ManyToOne(() => Posts, post => post.comments)
-    post: Posts;
+    post: Promise<Posts>;
+
+    postId: number;
 
     @Column()
     author: string;
