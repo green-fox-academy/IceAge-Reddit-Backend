@@ -1,8 +1,7 @@
 import { Service } from '@tsed/common';
 import { Unauthorized, NotFound } from '@tsed/exceptions';
-import { forEachLeadingCommentRange } from 'typescript';
-import { promisify } from 'util';
 import { Posts } from '../entities/Posts';
+import { Comment } from '../entities/Comment';
 
 import { User } from '../entities/User';
 import { JWToken, UserCreation, UserLogin } from '../models/auth.types';
@@ -77,17 +76,17 @@ export class UserService {
 		if (user == undefined) {
 			throw new NotFound("This user doesn't exist");
 		}
-		else return this.createUserDTO(user); 
+		else return await this.createUserDTO(user); 
 	}
 
-	public createUserDTO(user: User): UserDTO {
+	public async createUserDTO(user: User): Promise<UserDTO> {
 
-			const userDTO: UserDTO = {
-				id: user.id,
-				username: user.username,
-				date_created: user.date_created,
-				comments: this.loadAllComments(user);
-				posts: user.posts,
+		const userDTO: UserDTO = {
+			id: user.id,
+			username: user.username,
+			date_created: user.date_created,
+			comments: await this.loadAllComments(user),
+			posts: user.posts,
 		} 
 		return userDTO;
 	}	
@@ -99,14 +98,11 @@ export class UserService {
 				id: comment.id,
 				postId: post.id,
 				author: comment.author,
-				dateCreated: comment.date_created,
+				date_created: comment.date_created,
 				description: comment.description,
-			}
+			} as Comment;
 			return stableComment;
 		}));
-		return comments
-		
-
+		return comments;
 	}
-
 }
